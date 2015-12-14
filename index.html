@@ -179,110 +179,15 @@
 
     
     
+      
+      
+        
+        
+        
+      
 
+      
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/20/nodejs-1/" itemprop="url">
-                  第一次使用nodejs心得
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-11-20T16:53:45+08:00" content="2015-11-20">
-              2015-11-20
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>   本周使用nodejs，写了几个rest接口，感觉还不错，总结一下</p>
-<h1 id="坑：">坑：</h1><h2 id="坑一：nodejs_session_设置">坑一：nodejs session 设置</h2><p>   nodejs cookie存活时间单位是毫秒，是毫秒，是毫秒！设置cookie时长：</p>
-<p>   在express的app.js 设置：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(session(&#123; secret: <span class="string">'****'</span>, cookie: &#123; maxAge: <span class="number">1800000</span>&#125;&#125;));</span><br></pre></td></tr></table></figure>
-<p>  这里的maxAge就是标明cookie时长，1800000表示半个小时</p>
-<h2 id="坑二：获取参数">坑二：获取参数</h2><pre><code>req.<span class="built_in">params</span>.xxxxx 获取从path中的变量
-
-req.query.xxxxx 获取从<span class="built_in">get</span>中的?xxxx=中
-
-req.body.xxxxx 获取从<span class="built_in">post</span>中的变量 
-</code></pre><h1 id="心得">心得</h1><h2 id="心得一：">心得一：</h2><h3 id="登录filter">登录filter</h3><p>例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/****'</span>,<span class="keyword">function</span>(req,res,next)&#123;</span><br><span class="line">	loginFilter.loginValidate(req,res,<span class="keyword">function</span>(result)&#123;</span><br><span class="line">		next();</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;,<span class="keyword">function</span>(req,res,next)&#123;</span><br></pre></td></tr></table></figure></p>
-<p>next()就可以执行下一个函数function(req,res,next){}</p>
-<h2 id="心得二：">心得二：</h2><h3 id="nodejs_异步的两种方法（当然还有很多种，本次开发就用到两种）">nodejs 异步的两种方法（当然还有很多种，本次开发就用到两种）</h3><p>1.async.mapSeries<br>用法async.mapSeries(arr, iterator, callback) </p>
-<p>arr是一个数组，不能是一个json对象。 </p>
-<p>作用的将arr中的每一项依次拿给iterator去执行，执行结果传给最后的callback<br>…例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">async.mapSeries(productIds,<span class="keyword">function</span>(item, callback)&#123;</span><br><span class="line">         (<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">         	var contentsql = <span class="string">"select * from content where productid in (?)"</span>;</span><br><span class="line">         	conn.query(contentsql,[item],<span class="keyword">function</span>(err,content)&#123;</span><br><span class="line">		callback(null, content);</span><br><span class="line">					 	 	&#125;);  </span><br><span class="line">         &#125;());</span><br><span class="line">     &#125;,<span class="keyword">function</span>(err, results)&#123;</span><br><span class="line">     	//console.log(results);</span><br><span class="line">     &#125;);</span><br></pre></td></tr></table></figure>
-<ol>
-<li>async.waterfall</li>
-</ol>
-<p>用法：async.waterfall(tasks, [callback]); </p>
-<p>task是函数组成的数组，callback是中途出错或者全部执行完后的回调函数。 </p>
-<p>它的特点是串行执行函数，并且前一个函数的结果会传给下一个函数，比较类似Step模块的功能。 </p>
-<p>例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">async.waterfall([<span class="keyword">function</span>(callback)&#123;</span><br><span class="line">	terminal.getTerminalByTerminalId(tid,<span class="keyword">function</span>(err,result)&#123;</span><br><span class="line">		<span class="keyword">if</span>(result.status==<span class="number">200</span>)&#123;</span><br><span class="line">			</span><br><span class="line">			var result = &#123;localcontent:result.data[<span class="number">0</span>].contentreport,onlinestate:result.data[<span class="number">0</span>].onlinestate&#125;;</span><br><span class="line"></span><br><span class="line">			callback(err,result);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			res.json(result);</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;,</span><br><span class="line">	<span class="keyword">function</span>(result,callback)&#123;</span><br><span class="line">		// <span class="keyword">if</span>(result.onlinestate==<span class="number">0</span>)&#123;</span><br><span class="line">			var localcontent = result.localcontent;</span><br><span class="line">			var contentids = new Array();</span><br><span class="line">			contentids = localcontent.split(<span class="string">'|'</span>);</span><br><span class="line">			content.getContentsByProductId(contentids,<span class="keyword">function</span>(err,result)&#123;</span><br><span class="line"></span><br><span class="line">				callback(err,result);</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">		// &#125;<span class="keyword">else</span>&#123;</span><br><span class="line"></span><br><span class="line">		// &#125;</span><br><span class="line">	&#125;],<span class="keyword">function</span>(err,result)&#123;</span><br><span class="line">		<span class="keyword">if</span>(err)&#123;</span><br><span class="line">			res.json(&#123;status: <span class="string">"500"</span>, message: err&#125;);</span><br><span class="line">			<span class="built_in">return</span>;	</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			res.json(result);</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<h2 id="总结：">总结：</h2><p>   nodejs并没有像php，java有那么多成熟的开源的框架，或者工具可以用，很多时候包括底层的sql都得自己写，这样的话，整个项目的架构就要想的很清楚，最好还是按照mvc的分层来架构，自己写写底层的东西还是很有意思的</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
 
     
       
@@ -416,7 +321,7 @@ req.body.xxxxx 获取从<span class="built_in">post</span>中的变量
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">1</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
