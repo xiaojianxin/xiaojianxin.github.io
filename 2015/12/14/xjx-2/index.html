@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="mysql," />
 
 
 
@@ -53,19 +53,40 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="description" content="本周研究了一些数据库连接方面的知识
+外连接左外连接1.语法
+select a.,b. from a left join b on a.id = b.id;
+2.效果
+左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行
+右外连接1.语法
+select a.,b. from a right join b on a.id = b.id;
+2.效果
+右外连接的结果集包括r">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2015/11/13/hello-world/index.html">
+<meta property="og:title" content="mysql心得(一)">
+<meta property="og:url" content="http://yoursite.com/2015/12/14/xjx-2/index.html">
 <meta property="og:site_name" content="tmac-xjx的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2015-11-13T05:49:28.138Z">
+<meta property="og:description" content="本周研究了一些数据库连接方面的知识
+外连接左外连接1.语法
+select a.,b. from a left join b on a.id = b.id;
+2.效果
+左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行
+右外连接1.语法
+select a.,b. from a right join b on a.id = b.id;
+2.效果
+右外连接的结果集包括r">
+<meta property="og:updated_time" content="2015-12-14T11:55:11.335Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="mysql心得(一)">
+<meta name="twitter:description" content="本周研究了一些数据库连接方面的知识
+外连接左外连接1.语法
+select a.,b. from a left join b on a.id = b.id;
+2.效果
+左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行
+右外连接1.语法
+select a.,b. from a right join b on a.id = b.id;
+2.效果
+右外连接的结果集包括r">
 
 
 
@@ -77,7 +98,7 @@ Quick">
   };
 </script>
 
-  <title> Hello World | tmac-xjx的博客 </title>
+  <title> mysql心得(一) | tmac-xjx的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -197,7 +218,7 @@ Quick">
             
             
               
-                Hello World
+                mysql心得(一)
               
             
           </h1>
@@ -206,8 +227,8 @@ Quick">
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-11-13T13:49:28+08:00" content="2015-11-13">
-              2015-11-13
+            <time itemprop="dateCreated" datetime="2015-12-14T19:46:14+08:00" content="2015-12-14">
+              2015-12-14
             </time>
           </span>
 
@@ -230,33 +251,51 @@ Quick">
       
 
       
-        <span itemprop="articleBody"><p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <span itemprop="articleBody"><p>本周研究了一些数据库连接方面的知识</p>
+<h1 id="外连接">外连接</h1><h2 id="左外连接">左外连接</h2><p>1.语法</p>
+<p>select a.<em>,b.</em> from a left join b on a.id = b.id;</p>
+<p>2.效果</p>
+<p>左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行</p>
+<h2 id="右外连接">右外连接</h2><p>1.语法</p>
+<p>select a.<em>,b.</em> from a right join b on a.id = b.id;</p>
+<p>2.效果</p>
+<p>右外连接的结果集包括right join 指定的右表的所有行，而不仅仅是连接所匹配的行</p>
+<h2 id="交叉连接">交叉连接</h2><p>1.语法</p>
+<p>select a.<em>,b.</em> from a cross join b;</p>
+<p>2.效果</p>
+<p>a表和b表的笛卡尔积</p>
+<h2 id="完全连接">完全连接</h2><p>1.语法</p>
+<p>select a.<em>,b.</em> from a full join b ;</p>
+<p>2.效果</p>
+<p>两个表的全部数据都有，不匹配用null表示</p>
+<h1 id="内连接">内连接</h1><p>典型的连接运算<br>1.语法</p>
+<p>select a.<em>,b.</em> from a join b on a.id = b.id;</p>
+<p>2.效果</p>
+<p>利用内连接可获取两表的公共部分的记录。</p>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag">#mysql</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2015/12/04/xjx1/" rel="next" title="nodejs使用心得(一)">
+                <i class="fa fa-chevron-left"></i> nodejs使用心得(一)
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/04/xjx1/" rel="prev" title="nodejs使用心得(一)">
-                nodejs使用心得(一) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -370,7 +409,7 @@ Quick">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick_Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create_a_new_post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run_server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate_static_files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy_to_remote_sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#外连接"><span class="nav-number">1.</span> <span class="nav-text">外连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#左外连接"><span class="nav-number">1.1.</span> <span class="nav-text">左外连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#右外连接"><span class="nav-number">1.2.</span> <span class="nav-text">右外连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉连接"><span class="nav-number">1.3.</span> <span class="nav-text">交叉连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完全连接"><span class="nav-number">1.4.</span> <span class="nav-text">完全连接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内连接"><span class="nav-number">2.</span> <span class="nav-text">内连接</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
