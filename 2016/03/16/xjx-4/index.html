@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="YII," />
 
 
 
@@ -53,15 +53,22 @@
 
 
 
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tmac-xjx的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="好久没有更新博客了，最近在刷leetcode，过一段时间写上leetcode的题解
+YII2.0ActiveRecord 1.Active Record 提供了一个面向对象的数据库访问接口，是Yii对ORM的实现。一个Active Record类和一张数据库表相关联， 一个Active Record实例则对应于表的一行，而Active Record实例的一个属性则对应于该行中的一列数据。
+ 相对于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YII2.0 ActiveRecord(一)">
+<meta property="og:url" content="http://yoursite.com/2016/03/16/xjx-4/index.html">
 <meta property="og:site_name" content="tmac-xjx的博客">
-<meta property="og:description">
+<meta property="og:description" content="好久没有更新博客了，最近在刷leetcode，过一段时间写上leetcode的题解
+YII2.0ActiveRecord 1.Active Record 提供了一个面向对象的数据库访问接口，是Yii对ORM的实现。一个Active Record类和一张数据库表相关联， 一个Active Record实例则对应于表的一行，而Active Record实例的一个属性则对应于该行中的一列数据。
+ 相对于">
+<meta property="og:updated_time" content="2016-03-16T13:39:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tmac-xjx的博客">
-<meta name="twitter:description">
+<meta name="twitter:title" content="YII2.0 ActiveRecord(一)">
+<meta name="twitter:description" content="好久没有更新博客了，最近在刷leetcode，过一段时间写上leetcode的题解
+YII2.0ActiveRecord 1.Active Record 提供了一个面向对象的数据库访问接口，是Yii对ORM的实现。一个Active Record类和一张数据库表相关联， 一个Active Record实例则对应于表的一行，而Active Record实例的一个属性则对应于该行中的一列数据。
+ 相对于">
 
 
 
@@ -73,7 +80,7 @@
   };
 </script>
 
-  <title> tmac-xjx的博客 </title>
+  <title> YII2.0 ActiveRecord(一) | tmac-xjx的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -94,9 +101,7 @@
 
 
 
-  <div class="container one-column 
-   page-home 
-">
+  <div class="container one-column page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -173,15 +178,9 @@
       <div class="main-inner">
         <div id="content" class="content">
           
-  <section id="posts" class="posts-expand">
 
+  <div id="posts" class="posts-expand">
     
-
-    
-    
-
-    
-      
 
   
   
@@ -201,10 +200,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/03/16/xjx-4/" itemprop="url">
-                  YII2.0 ActiveRecord(一)
-                </a>
+                YII2.0 ActiveRecord(一)
               
             
           </h1>
@@ -237,10 +233,7 @@
       
 
       
-        
-          <span itemprop="articleBody">
-            
-              <p> 好久没有更新博客了，最近在刷leetcode，过一段时间写上leetcode的题解</p>
+        <span itemprop="articleBody"><p> 好久没有更新博客了，最近在刷leetcode，过一段时间写上leetcode的题解</p>
 <h1 id="YII2-0">YII2.0</h1><h2 id="ActiveRecord">ActiveRecord</h2><p> 1.Active Record 提供了一个面向对象的数据库访问接口，是Yii对ORM的实现。一个Active Record类和一张数据库表相关联， 一个Active Record实例则对应于表的一行，而Active Record实例的一个属性则对应于该行中的一列数据。</p>
 <p> 相对于传统的sql，ActiveRecord可以已面向对象的方式操作数据库</p>
 <p> 2.查询数据库</p>
@@ -266,419 +259,46 @@
 <p>为了解决上述性能问题，我们可以使用所谓的提前加载（eager loading）方法，即调用 yii\db\ActiveQuery::with()：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// SQL executed: SELECT * FROM customer LIMIT <span class="number">100</span>;</span><br><span class="line">//               SELECT * FROM orders WHERE customer_id IN (<span class="number">1</span>,<span class="number">2</span>,...)</span><br><span class="line"><span class="variable">$customers</span> = Customer::find()-&gt;<span class="built_in">limit</span>(<span class="number">100</span>)</span><br><span class="line">    -&gt;with(<span class="string">'orders'</span>)-&gt;all();</span><br><span class="line"></span><br><span class="line">foreach (<span class="variable">$customers</span> as <span class="variable">$customer</span>) &#123;</span><br><span class="line">    // no SQL executed</span><br><span class="line">    <span class="variable">$orders</span> = <span class="variable">$customer</span>-&gt;orders;</span><br><span class="line">    // ...handle <span class="variable">$orders</span>...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样，只需要执行两条SQL查询语句就完成同样的任务!</p>
-
-            
-          </span>
-        
+</span>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/16/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-16T21:09:04+08:00" content="2016-03-16">
-              2016-03-16
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/YII/" rel="tag">#YII</a>
           
-            
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
       
 
       
-        
-          <span itemprop="articleBody">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
+              <a href="/2016/03/16/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
             
-          </span>
-        
-      
-    </div>
+          </div>
 
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/08/xjx-3/" itemprop="url">
-                  php header函数 修改头部
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-08T17:24:02+08:00" content="2016-01-08">
-              2016-01-08
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
       
 
       
-        
-          <span itemprop="articleBody">
-            
-              <h3 id="php修改http请求头部">php修改http请求头部</h3><p> 在用Yii2.0写restful接口的过程中有这样的一个疑问：</p>
-<p> restful接口既然是完全按照http的规范来定义的，那么restful接口的状态到底应该写在哪一部分？</p>
-<p> 是body里面的数据，还是直接标明请求的状态？</p>
-<p> 对于这个问题大家各执一词，不过现在的问题是，如果我要修改http请求的header该如何做呢？</p>
-<h2 id="header()详解">header()详解</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">void header ( string <span class="variable">$string</span> [, bool <span class="variable">$replace</span> = <span class="literal">true</span> [, int <span class="variable">$http_response_code</span> ]] )</span><br></pre></td></tr></table></figure>
-<p> 1.重定向</p>
-<p> header(“Location: <a href="http://www.baidu.com" target="_blank" rel="external">http://www.baidu.com</a>“);</p>
-<p> exit();//在每个重定向之后都必须加上“exit”,避免发生错误后，继续执行。</p>
-<p> 它不仅把报文发送给浏览器，而且还将返回给浏览器一个 REDIRECT（302）的状态码，除非状态码已经事先被设置为了201或者3xx。</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php </span><br><span class="line">/** </span><br><span class="line">@title:PHP定时跳转 </span><br><span class="line">@功能:等待指定的时间，然后再跳转到指定页面（代替html meta方式） </span><br><span class="line">*/ </span><br><span class="line">header(<span class="string">"refresh:3;url=http://www.baidu.com"</span>); </span><br><span class="line"><span class="built_in">print</span>(<span class="string">'正在加载，请稍等...&lt;br&gt;三秒后自动跳转~~~'</span>); </span><br><span class="line">/* </span><br><span class="line">补充说明： </span><br><span class="line">若等待时间为<span class="number">0</span>，则与header(<span class="string">"location:"</span>)等效。 </span><br><span class="line">*/ </span><br><span class="line">header重定向 就等价于替用户在地址栏输入url</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p> 2.修改请求状态码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(<span class="string">"HTTP/1.0 404 Not Found"</span>);</span><br><span class="line"><span class="built_in">exit</span>();//php手册当中没有写，实测得加上</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>以上是两种特殊的string</p>
-<p>其他具体功能可以具体google  or  baidu</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/12/14/xjx-2/" itemprop="url">
-                  mysql心得(一)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-12-14T19:46:14+08:00" content="2015-12-14">
-              2015-12-14
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>本周研究了一些数据库连接方面的知识</p>
-<h1 id="外连接">外连接</h1><h2 id="左外连接">左外连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a left join b on a.id = b.id;</p>
-<p>2.效果</p>
-<p>左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行</p>
-<h2 id="右外连接">右外连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a right join b on a.id = b.id;</p>
-<p>2.效果</p>
-<p>右外连接的结果集包括right join 指定的右表的所有行，而不仅仅是连接所匹配的行</p>
-<h2 id="交叉连接">交叉连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a cross join b;</p>
-<p>2.效果</p>
-<p>a表和b表的笛卡尔积</p>
-<h2 id="完全连接">完全连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a full join b ;</p>
-<p>2.效果</p>
-<p>两个表的全部数据都有，不匹配用null表示</p>
-<h1 id="内连接">内连接</h1><p>典型的连接运算<br>1.语法</p>
-<p>select a.<em>,b.</em> from a join b on a.id = b.id;</p>
-<p>2.效果</p>
-<p>利用内连接可获取两表的公共部分的记录。</p>
-
-            
-          </span>
-        
+    <div class="post-spread">
       
     </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/12/04/xjx1/" itemprop="url">
-                  nodejs使用心得(一)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-12-04T19:48:45+08:00" content="2015-12-04">
-              2015-12-04
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>   本周使用nodejs，写了几个rest接口，感觉还不错，总结一下</p>
-<h1 id="坑：">坑：</h1><h2 id="坑一：nodejs_session_设置">坑一：nodejs session 设置</h2><p>   nodejs cookie存活时间单位是毫秒，是毫秒，是毫秒！设置cookie时长：</p>
-<p>   在express的app.js 设置：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(session(&#123; secret: <span class="string">'****'</span>, cookie: &#123; maxAge: <span class="number">1800000</span>&#125;&#125;));</span><br></pre></td></tr></table></figure>
-<p>  这里的maxAge就是标明cookie时长，1800000表示半个小时</p>
-<h2 id="坑二：获取参数">坑二：获取参数</h2><pre><code>req.<span class="built_in">params</span>.xxxxx 获取从path中的变量
-
-req.query.xxxxx 获取从<span class="built_in">get</span>中的?xxxx=中
-
-req.body.xxxxx 获取从<span class="built_in">post</span>中的变量 
-</code></pre><h1 id="心得">心得</h1><h2 id="心得一：">心得一：</h2><h3 id="登录filter">登录filter</h3><p>例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/****'</span>,<span class="keyword">function</span>(req,res,next)&#123;</span><br><span class="line">	loginFilter.loginValidate(req,res,<span class="keyword">function</span>(result)&#123;</span><br><span class="line">		next();</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;,<span class="keyword">function</span>(req,res,next)&#123;</span><br></pre></td></tr></table></figure></p>
-<p>next()就可以执行下一个函数function(req,res,next){}</p>
-<h2 id="心得二：">心得二：</h2><h3 id="nodejs_异步的两种方法（当然还有很多种，本次开发就用到两种）">nodejs 异步的两种方法（当然还有很多种，本次开发就用到两种）</h3><p>1.async.mapSeries<br>用法async.mapSeries(arr, iterator, callback) </p>
-<p>arr是一个数组，不能是一个json对象。 </p>
-<p>作用的将arr中的每一项依次拿给iterator去执行，执行结果传给最后的callback<br>…例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">async.mapSeries(productIds,<span class="keyword">function</span>(item, callback)&#123;</span><br><span class="line">         (<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">         	var contentsql = <span class="string">"select * from content where productid in (?)"</span>;</span><br><span class="line">         	conn.query(contentsql,[item],<span class="keyword">function</span>(err,content)&#123;</span><br><span class="line">		callback(null, content);</span><br><span class="line">					 	 	&#125;);  </span><br><span class="line">         &#125;());</span><br><span class="line">     &#125;,<span class="keyword">function</span>(err, results)&#123;</span><br><span class="line">     	//console.log(results);</span><br><span class="line">     &#125;);</span><br></pre></td></tr></table></figure>
-<ol>
-<li>async.waterfall</li>
-</ol>
-<p>用法：async.waterfall(tasks, [callback]); </p>
-<p>task是函数组成的数组，callback是中途出错或者全部执行完后的回调函数。 </p>
-<p>它的特点是串行执行函数，并且前一个函数的结果会传给下一个函数，比较类似Step模块的功能。 </p>
-<p>例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">async.waterfall([<span class="keyword">function</span>(callback)&#123;</span><br><span class="line">	terminal.getTerminalByTerminalId(tid,<span class="keyword">function</span>(err,result)&#123;</span><br><span class="line">		<span class="keyword">if</span>(result.status==<span class="number">200</span>)&#123;</span><br><span class="line">			</span><br><span class="line">			var result = &#123;localcontent:result.data[<span class="number">0</span>].contentreport,onlinestate:result.data[<span class="number">0</span>].onlinestate&#125;;</span><br><span class="line"></span><br><span class="line">			callback(err,result);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			res.json(result);</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;,</span><br><span class="line">	<span class="keyword">function</span>(result,callback)&#123;</span><br><span class="line">		// <span class="keyword">if</span>(result.onlinestate==<span class="number">0</span>)&#123;</span><br><span class="line">			var localcontent = result.localcontent;</span><br><span class="line">			var contentids = new Array();</span><br><span class="line">			contentids = localcontent.split(<span class="string">'|'</span>);</span><br><span class="line">			content.getContentsByProductId(contentids,<span class="keyword">function</span>(err,result)&#123;</span><br><span class="line"></span><br><span class="line">				callback(err,result);</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">		// &#125;<span class="keyword">else</span>&#123;</span><br><span class="line"></span><br><span class="line">		// &#125;</span><br><span class="line">	&#125;],<span class="keyword">function</span>(err,result)&#123;</span><br><span class="line">		<span class="keyword">if</span>(err)&#123;</span><br><span class="line">			res.json(&#123;status: <span class="string">"500"</span>, message: err&#125;);</span><br><span class="line">			<span class="built_in">return</span>;	</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			res.json(result);</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<h2 id="总结：">总结：</h2><p>   nodejs并没有像php，java有那么多成熟的开源的框架，或者工具可以用，很多时候包括底层的sql都得自己写，这样的话，整个项目的架构就要想的很清楚，最好还是按照mvc的分层来架构，自己写写底层的东西还是很有意思的</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-
-  </section>
-
-  
+  </div>
 
 
         </div>
@@ -687,6 +307,10 @@ req.body.xxxxx 获取从<span class="built_in">post</span>中的变量
 
 
         
+  <div class="comments" id="comments">
+    
+  </div>
+
 
       </div>
 
@@ -707,8 +331,17 @@ req.body.xxxxx 获取从<span class="built_in">post</span>中的变量
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" src="/images/head.jpg" alt="tmac-xjx" itemprop="image"/>
           <p class="site-author-name" itemprop="name">tmac-xjx</p>
@@ -753,6 +386,23 @@ req.body.xxxxx 获取从<span class="built_in">post</span>中的变量
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YII2-0"><span class="nav-number">1.</span> <span class="nav-text">YII2.0</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ActiveRecord"><span class="nav-number">1.1.</span> <span class="nav-text">ActiveRecord</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
       
 
     </div>
@@ -823,6 +473,167 @@ req.body.xxxxx 获取从<span class="built_in">post</span>中的变量
   <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
 
   <script type="text/javascript" src="/js/bootstrap.js"></script>
 
