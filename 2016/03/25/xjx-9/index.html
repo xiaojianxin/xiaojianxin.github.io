@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="mysql," />
+  <meta name="keywords" content="leetcode," />
 
 
 
@@ -53,40 +53,22 @@
 
 
 
-<meta name="description" content="本周研究了一些数据库连接方面的知识
-外连接左外连接1.语法
-select a.,b. from a left join b on a.id = b.id;
-2.效果
-左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行
-右外连接1.语法
-select a.,b. from a right join b on a.id = b.id;
-2.效果
-右外连接的结果集包括r">
+<meta name="description" content="今天再分享三个递归回溯的问题
+问题一 Combination sum问题描述：For example, given candidate set 2,3,6,7 and target 7,A solution set is:[7][2, 2, 3] 
+1234567891011121314151617181920212223242526272829     vector&amp;lt;vector&amp;lt;i">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql心得(一)">
-<meta property="og:url" content="http://yoursite.com/2015/12/14/xjx-2/index.html">
+<meta property="og:title" content="关于递归回溯的问题总结（二）">
+<meta property="og:url" content="http://yoursite.com/2016/03/25/xjx-9/index.html">
 <meta property="og:site_name" content="tmac-xjx的博客">
-<meta property="og:description" content="本周研究了一些数据库连接方面的知识
-外连接左外连接1.语法
-select a.,b. from a left join b on a.id = b.id;
-2.效果
-左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行
-右外连接1.语法
-select a.,b. from a right join b on a.id = b.id;
-2.效果
-右外连接的结果集包括r">
-<meta property="og:updated_time" content="2015-12-14T11:55:11.000Z">
+<meta property="og:description" content="今天再分享三个递归回溯的问题
+问题一 Combination sum问题描述：For example, given candidate set 2,3,6,7 and target 7,A solution set is:[7][2, 2, 3] 
+1234567891011121314151617181920212223242526272829     vector&amp;lt;vector&amp;lt;i">
+<meta property="og:updated_time" content="2016-03-25T03:02:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql心得(一)">
-<meta name="twitter:description" content="本周研究了一些数据库连接方面的知识
-外连接左外连接1.语法
-select a.,b. from a left join b on a.id = b.id;
-2.效果
-左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行
-右外连接1.语法
-select a.,b. from a right join b on a.id = b.id;
-2.效果
-右外连接的结果集包括r">
+<meta name="twitter:title" content="关于递归回溯的问题总结（二）">
+<meta name="twitter:description" content="今天再分享三个递归回溯的问题
+问题一 Combination sum问题描述：For example, given candidate set 2,3,6,7 and target 7,A solution set is:[7][2, 2, 3] 
+1234567891011121314151617181920212223242526272829     vector&amp;lt;vector&amp;lt;i">
 
 
 
@@ -98,7 +80,7 @@ select a.,b. from a right join b on a.id = b.id;
   };
 </script>
 
-  <title> mysql心得(一) | tmac-xjx的博客 </title>
+  <title> 关于递归回溯的问题总结（二） | tmac-xjx的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -218,7 +200,7 @@ select a.,b. from a right join b on a.id = b.id;
             
             
               
-                mysql心得(一)
+                关于递归回溯的问题总结（二）
               
             
           </h1>
@@ -227,8 +209,8 @@ select a.,b. from a right join b on a.id = b.id;
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-12-14T19:46:14+08:00" content="2015-12-14">
-              2015-12-14
+            <time itemprop="dateCreated" datetime="2016-03-25T10:23:34+08:00" content="2016-03-25">
+              2016-03-25
             </time>
           </span>
 
@@ -251,27 +233,22 @@ select a.,b. from a right join b on a.id = b.id;
       
 
       
-        <span itemprop="articleBody"><p>本周研究了一些数据库连接方面的知识</p>
-<h1 id="外连接">外连接</h1><h2 id="左外连接">左外连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a left join b on a.id = b.id;</p>
-<p>2.效果</p>
-<p>左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行</p>
-<h2 id="右外连接">右外连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a right join b on a.id = b.id;</p>
-<p>2.效果</p>
-<p>右外连接的结果集包括right join 指定的右表的所有行，而不仅仅是连接所匹配的行</p>
-<h2 id="交叉连接">交叉连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a cross join b;</p>
-<p>2.效果</p>
-<p>a表和b表的笛卡尔积</p>
-<h2 id="完全连接">完全连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a full join b ;</p>
-<p>2.效果</p>
-<p>两个表的全部数据都有，不匹配用null表示</p>
-<h1 id="内连接">内连接</h1><p>典型的连接运算<br>1.语法</p>
-<p>select a.<em>,b.</em> from a join b on a.id = b.id;</p>
-<p>2.效果</p>
-<p>利用内连接可获取两表的公共部分的记录。</p>
+        <span itemprop="articleBody"><p>今天再分享三个递归回溯的问题</p>
+<h1 id="问题一_Combination_sum">问题一 Combination sum</h1><p>问题描述：For example, given candidate set 2,3,6,7 and target 7,<br>A solution set is:<br>[7]<br>[2, 2, 3] </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">   vector&lt;vector&lt;int&gt;&gt; combinationSum(vector&lt;int&gt;&amp; candidates, int target)&#123;</span><br><span class="line"></span><br><span class="line">   	vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line">   	vector&lt;int&gt; temp;</span><br><span class="line"></span><br><span class="line">sort(candidates.begin(),candidates.end());//关键</span><br><span class="line">   	dfs(result,temp,target,<span class="number">0</span>,candidates);</span><br><span class="line"></span><br><span class="line">   	<span class="built_in">return</span> result;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; result,vector&lt;int&gt;&amp; temp,int target,int pos,vector&lt;int&gt;&amp; candidates)&#123;</span><br><span class="line">   	<span class="keyword">if</span>(!target)&#123;</span><br><span class="line">   		result.push_back(temp);</span><br><span class="line">   	&#125;</span><br><span class="line"></span><br><span class="line">   	<span class="keyword">for</span>(int i = pos;i&lt;candidates.size()&amp;&amp;target&gt;=candidates[i];i++)&#123;</span><br><span class="line"></span><br><span class="line">	temp.push_back(candidates[i]);</span><br><span class="line"></span><br><span class="line">	dfs(result,temp,target-candidates[i],i,candidates);</span><br><span class="line"></span><br><span class="line">	temp.pop_back();</span><br><span class="line">   	&#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>#问题一的延伸：Combination Sum II</p>
+<p>For example, given candidate set 10,1,2,7,6,1,5 and target 8,<br>A solution set is:<br>[1, 7]<br>[1, 2, 5]<br>[2, 6]<br>[1, 1, 6] </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">vector&lt;vector&lt;int&gt;&gt; combinationSum2(vector&lt;int&gt;&amp; candidates, int target) &#123;</span><br><span class="line">    </span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line">    </span><br><span class="line">    vector&lt;int&gt; temp;</span><br><span class="line">    </span><br><span class="line">    sort(candidates.begin(),candidates.end());</span><br><span class="line">    dfs(temp,result,candidates,target,<span class="number">0</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">return</span> result;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(vector&lt;int&gt;&amp; temp,vector&lt;vector&lt;int&gt;&gt;&amp; result,vector&lt;int&gt;&amp; candidates,int target,int pos)&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(!target)&#123;</span><br><span class="line">		result.push_back(temp);</span><br><span class="line">		<span class="built_in">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(int i = pos;i&lt;candidates.size()&amp;&amp;target&gt;=candidates[i];i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i&amp;&amp;candidates[i]==candidates[i-<span class="number">1</span>]&amp;&amp;i&gt;pos)&#123;</span><br><span class="line">			<span class="built_in">continue</span>;//关键一步，去重</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		temp.push_back(candidates[i]);</span><br><span class="line">		dfs(temp,result,candidates,target,i+<span class="number">1</span>);</span><br><span class="line">		temp.pop_back();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="继续延伸：Combination_Sum_III">继续延伸：Combination Sum III</h1><p>Example 1:</p>
+<p>Input: k = 3, n = 7</p>
+<p>Output:</p>
+<p>[[1,2,4]]</p>
+<p>Example 2:</p>
+<p>Input: k = 3, n = 9</p>
+<p>Output:</p>
+<p>[[1,2,6], [1,3,5], [2,3,4]]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">vector&lt;vector&lt;int&gt;&gt; combinationSum3(int k,int n)&#123;</span><br><span class="line">	</span><br><span class="line">	vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line"></span><br><span class="line">	vector&lt;int&gt; temp;</span><br><span class="line"></span><br><span class="line">	dfs(result,temp,k,n,<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; result,vector&lt;int&gt;&amp; temp,int k,int n,int sum,int pos)&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(sum==n&amp;&amp;temp.size()==k)&#123;</span><br><span class="line">		result.push_back(temp);</span><br><span class="line">		<span class="built_in">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(int i = pos;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line"></span><br><span class="line">		temp.push_back(i);</span><br><span class="line">		dfs(result,temp,k,n,sum+i,i+<span class="number">1</span>);</span><br><span class="line">		temp.pop_back();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>今天先分享这么多，明天继续</p>
 </span>
       
     </div>
@@ -280,7 +257,7 @@ select a.,b. from a right join b on a.id = b.id;
       
         <div class="post-tags">
           
-            <a href="/tags/mysql/" rel="tag">#mysql</a>
+            <a href="/tags/leetcode/" rel="tag">#leetcode</a>
           
         </div>
       
@@ -289,17 +266,13 @@ select a.,b. from a right join b on a.id = b.id;
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/04/xjx1/" rel="next" title="nodejs使用心得(一)">
-                <i class="fa fa-chevron-left"></i> nodejs使用心得(一)
+              <a href="/2016/03/24/xjx-8/" rel="next" title="关于递归回溯的问题总结（一）">
+                <i class="fa fa-chevron-left"></i> 关于递归回溯的问题总结（一）
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/08/xjx-3/" rel="prev" title="php header函数 修改头部">
-                php header函数 修改头部 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -413,7 +386,7 @@ select a.,b. from a right join b on a.id = b.id;
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#外连接"><span class="nav-number">1.</span> <span class="nav-text">外连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#左外连接"><span class="nav-number">1.1.</span> <span class="nav-text">左外连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#右外连接"><span class="nav-number">1.2.</span> <span class="nav-text">右外连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉连接"><span class="nav-number">1.3.</span> <span class="nav-text">交叉连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完全连接"><span class="nav-number">1.4.</span> <span class="nav-text">完全连接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内连接"><span class="nav-number">2.</span> <span class="nav-text">内连接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题一_Combination_sum"><span class="nav-number">1.</span> <span class="nav-text">问题一 Combination sum</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#继续延伸：Combination_Sum_III"><span class="nav-number">2.</span> <span class="nav-text">继续延伸：Combination Sum III</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

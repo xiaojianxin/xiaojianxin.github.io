@@ -202,6 +202,102 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/25/xjx-9/" itemprop="url">
+                  关于递归回溯的问题总结（二）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-25T10:23:34+08:00" content="2016-03-25">
+              2016-03-25
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>今天再分享三个递归回溯的问题</p>
+<h1 id="问题一_Combination_sum">问题一 Combination sum</h1><p>问题描述：For example, given candidate set 2,3,6,7 and target 7,<br>A solution set is:<br>[7]<br>[2, 2, 3] </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">   vector&lt;vector&lt;int&gt;&gt; combinationSum(vector&lt;int&gt;&amp; candidates, int target)&#123;</span><br><span class="line"></span><br><span class="line">   	vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line">   	vector&lt;int&gt; temp;</span><br><span class="line"></span><br><span class="line">sort(candidates.begin(),candidates.end());//关键</span><br><span class="line">   	dfs(result,temp,target,<span class="number">0</span>,candidates);</span><br><span class="line"></span><br><span class="line">   	<span class="built_in">return</span> result;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; result,vector&lt;int&gt;&amp; temp,int target,int pos,vector&lt;int&gt;&amp; candidates)&#123;</span><br><span class="line">   	<span class="keyword">if</span>(!target)&#123;</span><br><span class="line">   		result.push_back(temp);</span><br><span class="line">   	&#125;</span><br><span class="line"></span><br><span class="line">   	<span class="keyword">for</span>(int i = pos;i&lt;candidates.size()&amp;&amp;target&gt;=candidates[i];i++)&#123;</span><br><span class="line"></span><br><span class="line">	temp.push_back(candidates[i]);</span><br><span class="line"></span><br><span class="line">	dfs(result,temp,target-candidates[i],i,candidates);</span><br><span class="line"></span><br><span class="line">	temp.pop_back();</span><br><span class="line">   	&#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>#问题一的延伸：Combination Sum II</p>
+<p>For example, given candidate set 10,1,2,7,6,1,5 and target 8,<br>A solution set is:<br>[1, 7]<br>[1, 2, 5]<br>[2, 6]<br>[1, 1, 6] </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">vector&lt;vector&lt;int&gt;&gt; combinationSum2(vector&lt;int&gt;&amp; candidates, int target) &#123;</span><br><span class="line">    </span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line">    </span><br><span class="line">    vector&lt;int&gt; temp;</span><br><span class="line">    </span><br><span class="line">    sort(candidates.begin(),candidates.end());</span><br><span class="line">    dfs(temp,result,candidates,target,<span class="number">0</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">return</span> result;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(vector&lt;int&gt;&amp; temp,vector&lt;vector&lt;int&gt;&gt;&amp; result,vector&lt;int&gt;&amp; candidates,int target,int pos)&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(!target)&#123;</span><br><span class="line">		result.push_back(temp);</span><br><span class="line">		<span class="built_in">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(int i = pos;i&lt;candidates.size()&amp;&amp;target&gt;=candidates[i];i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i&amp;&amp;candidates[i]==candidates[i-<span class="number">1</span>]&amp;&amp;i&gt;pos)&#123;</span><br><span class="line">			<span class="built_in">continue</span>;//关键一步，去重</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		temp.push_back(candidates[i]);</span><br><span class="line">		dfs(temp,result,candidates,target,i+<span class="number">1</span>);</span><br><span class="line">		temp.pop_back();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="继续延伸：Combination_Sum_III">继续延伸：Combination Sum III</h1><p>Example 1:</p>
+<p>Input: k = 3, n = 7</p>
+<p>Output:</p>
+<p>[[1,2,4]]</p>
+<p>Example 2:</p>
+<p>Input: k = 3, n = 9</p>
+<p>Output:</p>
+<p>[[1,2,6], [1,3,5], [2,3,4]]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">vector&lt;vector&lt;int&gt;&gt; combinationSum3(int k,int n)&#123;</span><br><span class="line">	</span><br><span class="line">	vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line"></span><br><span class="line">	vector&lt;int&gt; temp;</span><br><span class="line"></span><br><span class="line">	dfs(result,temp,k,n,<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; result,vector&lt;int&gt;&amp; temp,int k,int n,int sum,int pos)&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(sum==n&amp;&amp;temp.size()==k)&#123;</span><br><span class="line">		result.push_back(temp);</span><br><span class="line">		<span class="built_in">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(int i = pos;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line"></span><br><span class="line">		temp.push_back(i);</span><br><span class="line">		dfs(result,temp,k,n,sum+i,i+<span class="number">1</span>);</span><br><span class="line">		temp.pop_back();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>今天先分享这么多，明天继续</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/24/xjx-8/" itemprop="url">
                   关于递归回溯的问题总结（一）
                 </a>
@@ -1092,7 +1188,7 @@ req.body.xxxxx 获取从<span class="built_in">post</span>中的变量
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
