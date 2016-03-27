@@ -202,6 +202,170 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/27/ModernPhp/" itemprop="url">
+                  ModernPhp读书笔记（一）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-27T10:02:07+08:00" content="2016-03-27">
+              2016-03-27
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="第一部分">第一部分</h1><h2 id="新时代的php的新特性">新时代的php的新特性</h2><h3 id="命名空间">命名空间</h3><pre><code>在学习yii2<span class="number">.0</span>框架的时候经常看到这样的代码，在每个文件的头部，都会有像这样的一句话：
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> app\controller;</span><br></pre></td></tr></table></figure>
+<pre><code>这就是命名空间，其作用就是按照一种虚拟的层次结构组织php代码，这种层次结构类似操作系统中文件系统的目录结构。
+
+使用命名空间是现代php组件生态系统的基础，组件和框架作者编写了大量的代码，如果没有命名空间，开发者在使用的时候会发生名称的冲突，导致php执行出错。
+
+声明命名空间：
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="keyword">namespace</span> app\controller;</span><br></pre></td></tr></table></figure>
+<pre><code>同一命名空间或子命名空间没有必要在同一个php文件中声明，我们可以在不同文件中编写属于同一个命名空间的多个类，just like what YII2<span class="number">.0</span> <span class="keyword">does</span>
+</code></pre><h3 id="导入和别名">导入和别名</h3><pre><code>之前一直不理解YII2<span class="number">.0</span>中的别名是什么意思
+
+使用命名空间，没创建别名
+</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">    &lt;?php </span><br><span class="line">    $response = new \Symfony\Component\HttpFoundation\Response('Oops',400);</span><br><span class="line">    $response-&gt;send();</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">    使用命名空间和默认的别名</span><br><span class="line"></span><br><span class="line">``` cpp</span><br><span class="line">   </span><br><span class="line">    use \Symfony\Component\HttpFoundation\Response;</span><br><span class="line"></span><br><span class="line">    $response = new Response('Oops',400);</span><br><span class="line">    $response-&gt;send();</span><br></pre></td></tr></table></figure>
+<pre><code>使用命名空间并自定义别名
+</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">use \Symfony\Component\HttpFoundation\Response sa Res;</span><br><span class="line"></span><br><span class="line">$r = new Res('Oops',400);</span><br><span class="line">$r-&gt;send;</span><br></pre></td></tr></table></figure>
+<pre><code>导入函数和常量
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">use func Namespace\functionName;</span><br><span class="line"></span><br><span class="line">functionName();</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">use constant Namespace\CONST_NAME;</span><br><span class="line"></span><br><span class="line">echo CONST_NAME;</span><br></pre></td></tr></table></figure>
+<h3 id="全局命名空间">全局命名空间</h3><pre><code>如果引用类，接口，函数或者常量时没有使用命名空间，php假定引用的类，接口，函数或者常量在当前命名空间中。
+
+如果这个假定不正确，php就会尝试解析类，接口，函数或者常量。如果需要在命名空间中引用其他命名空间的类，接口，函数或者常量，必须使用完全限定的php类名（命名空间+类名）。
+
+有些代码可能没有命名空间，这些代码在全局命名空间中，php原生的<span class="keyword">Exception</span>类就是如此。
+
+错误使用范例：
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="keyword">namespace</span> My\App;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Foo</span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> function <span class="title">doSomething</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		$exception = <span class="keyword">new</span> Exception();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>这里会发生错误，因为php会搜索<span class="command">\My</span><span class="command">\App</span><span class="command">\Exception</span>类，而这个类不存在
+
+正确使用范例：
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  &lt;?php</span><br><span class="line">  <span class="keyword">namespace</span> My\App;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">class</span> Foo&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> function <span class="title">doSometing</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> \Exception();</span><br><span class="line">&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用接口">使用接口</h3><pre><code>接口是两个PHP对象之间的契约，其目的不是让一个对象依赖另一个对象的身份，而是依赖另一个对象的能力。接口把代码和依赖解耦了，而且允许我们的代码依赖任何实现了预期接口的第三方代码。
+
+实例：
+
+新建一个DocumentStore的PHP类，这个类的作用是从不同的源收集文本
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> DocumentStore</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">protected</span> $data = [];</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> function <span class="title">addDocument</span><span class="params">(Documentable $document)</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		$key = $document-&gt;getId();</span><br><span class="line">		$value = $document-&gt;getContent();</span><br><span class="line">		$<span class="keyword">this</span>-&gt;data[$key] = $value;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> function <span class="title">getDocuments</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> $<span class="keyword">this</span>-&gt;data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>这里的Documentable就是一个接口，而不是类
+
+定义Documentable接口
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">interface Documentable</span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> function <span class="title">getId</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> function <span class="title">getContent</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>如果要使用curl从远程<span class="built_in">URL</span>获取HTML，则定义HtmlDocument类
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> HtmlDocument implements Documentable</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">protected</span> $url;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> function _construct($url)</span><br><span class="line">	&#123;</span><br><span class="line">		$<span class="keyword">this</span>-&gt;url = $url;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> function <span class="title">getId</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> $<span class="keyword">this</span>-&gt;url;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> function <span class="title">getContent</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		$ch = curl_init();</span><br><span class="line">		curl_setopt($ch,CURLOPT_URL,$<span class="keyword">this</span>-&gt;url);</span><br><span class="line">		curl_setopt($ch,CURLOPT_RETURNTRANSFER,<span class="number">1</span>);</span><br><span class="line">		curl_setopt($ch,CURLOPT_FOLLOWLOCATION,<span class="number">1</span>);</span><br><span class="line">		curl_setopt($ch,CURLOPT_MAXREDIRS,<span class="number">3</span>);</span><br><span class="line">		$html = curl_exec($ch);</span><br><span class="line">		curl_close($ch);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> $html;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>如果要实现读取流资源，则定义StreamDocument类
+</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line">class StreamDocument implements Documentable</span><br><span class="line">&#123;</span><br><span class="line">	protected $resource;</span><br><span class="line">	protected $buffer;</span><br><span class="line"></span><br><span class="line">	public function _construct($resouce,$buffer = 4096)</span><br><span class="line">	&#123;</span><br><span class="line">		$this-&gt;resource = $resource;</span><br><span class="line">		$this-&gt;buffer = $buffer;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public function getId()</span><br><span class="line">	&#123;</span><br><span class="line">		return 'resource-'.(int)$this-&gt;resource;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public function getContent()</span><br><span class="line">	&#123;</span><br><span class="line">		$streamContent = '';</span><br><span class="line">		rewind($this-&gt;resource);</span><br><span class="line">		while(feof($this-&gt;resource)==false)&#123;</span><br><span class="line">			$streamContent .= fread($this-&gt;resource,$this-&gt;buffer);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return $streamContent;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>如果要实现获取终端命令的执行结果的类
+</code></pre><pre><code class="cpp">
+<span class="keyword">class</span> CommandOutputDocument implements Documentable
+{ 
+    <span class="keyword">protected</span> $command;
+
+    <span class="keyword">public</span> function _construct($command)
+    {
+        $<span class="keyword">this</span>-&gt;command = $command;
+    }
+
+    <span class="function"><span class="keyword">public</span> function <span class="title">getId</span><span class="params">()</span>
+    </span>{
+        <span class="keyword">return</span> $<span class="keyword">this</span>-&gt;command;
+    }
+
+    <span class="function"><span class="keyword">public</span> function <span class="title">getContent</span><span class="params">()</span>
+    </span>{
+        <span class="keyword">return</span> shell_exec($<span class="keyword">this</span>-&gt;command);
+    }
+}
+</code></pre>
+<pre><code>使用DocumentStore类
+</code></pre><pre><code class="cpp">
+$documentStore = new DocumentStore();
+
+//添加html文档；
+$htmlDoc = new HtmlDocument('https://php.net');
+$documentStore-&gt;addDocument($htmlDoc);
+
+//添加流文档；
+$streamDoc = new StreamDocument(fopen('stream.txt','rb'));
+$documentStore-&gt;addDocument($streamDoc);
+
+//添加终端命令文档
+$cmdDoc = new CommandOutputDocument('cat /etc/hosts');
+$documentStore-&gt;addDocument($cmdDoc);
+
+print_r($documentStore-&gt;getDocument());
+</code></pre>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/25/xjx-9/" itemprop="url">
                   关于递归回溯的问题总结（二）
                 </a>
@@ -1042,114 +1206,14 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/12/04/xjx1/" itemprop="url">
-                  nodejs使用心得(一)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-12-04T19:48:45+08:00" content="2015-12-04">
-              2015-12-04
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>   本周使用nodejs，写了几个rest接口，感觉还不错，总结一下</p>
-<h1 id="坑：">坑：</h1><h2 id="坑一：nodejs_session_设置">坑一：nodejs session 设置</h2><p>   nodejs cookie存活时间单位是毫秒，是毫秒，是毫秒！设置cookie时长：</p>
-<p>   在express的app.js 设置：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(session(&#123; secret: <span class="string">'****'</span>, cookie: &#123; maxAge: <span class="number">1800000</span>&#125;&#125;));</span><br></pre></td></tr></table></figure>
-<p>  这里的maxAge就是标明cookie时长，1800000表示半个小时</p>
-<h2 id="坑二：获取参数">坑二：获取参数</h2><pre><code>req.<span class="built_in">params</span>.xxxxx 获取从path中的变量
-
-req.query.xxxxx 获取从<span class="built_in">get</span>中的?xxxx=中
-
-req.body.xxxxx 获取从<span class="built_in">post</span>中的变量 
-</code></pre><h1 id="心得">心得</h1><h2 id="心得一：">心得一：</h2><h3 id="登录filter">登录filter</h3><p>例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/****'</span>,<span class="keyword">function</span>(req,res,next)&#123;</span><br><span class="line">	loginFilter.loginValidate(req,res,<span class="keyword">function</span>(result)&#123;</span><br><span class="line">		next();</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;,<span class="keyword">function</span>(req,res,next)&#123;</span><br></pre></td></tr></table></figure></p>
-<p>next()就可以执行下一个函数function(req,res,next){}</p>
-<h2 id="心得二：">心得二：</h2><h3 id="nodejs_异步的两种方法（当然还有很多种，本次开发就用到两种）">nodejs 异步的两种方法（当然还有很多种，本次开发就用到两种）</h3><p>1.async.mapSeries<br>用法async.mapSeries(arr, iterator, callback) </p>
-<p>arr是一个数组，不能是一个json对象。 </p>
-<p>作用的将arr中的每一项依次拿给iterator去执行，执行结果传给最后的callback<br>…例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">async.mapSeries(productIds,<span class="keyword">function</span>(item, callback)&#123;</span><br><span class="line">         (<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">         	var contentsql = <span class="string">"select * from content where productid in (?)"</span>;</span><br><span class="line">         	conn.query(contentsql,[item],<span class="keyword">function</span>(err,content)&#123;</span><br><span class="line">		callback(null, content);</span><br><span class="line">					 	 	&#125;);  </span><br><span class="line">         &#125;());</span><br><span class="line">     &#125;,<span class="keyword">function</span>(err, results)&#123;</span><br><span class="line">     	//console.log(results);</span><br><span class="line">     &#125;);</span><br></pre></td></tr></table></figure>
-<ol>
-<li>async.waterfall</li>
-</ol>
-<p>用法：async.waterfall(tasks, [callback]); </p>
-<p>task是函数组成的数组，callback是中途出错或者全部执行完后的回调函数。 </p>
-<p>它的特点是串行执行函数，并且前一个函数的结果会传给下一个函数，比较类似Step模块的功能。 </p>
-<p>例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">async.waterfall([<span class="keyword">function</span>(callback)&#123;</span><br><span class="line">	terminal.getTerminalByTerminalId(tid,<span class="keyword">function</span>(err,result)&#123;</span><br><span class="line">		<span class="keyword">if</span>(result.status==<span class="number">200</span>)&#123;</span><br><span class="line">			</span><br><span class="line">			var result = &#123;localcontent:result.data[<span class="number">0</span>].contentreport,onlinestate:result.data[<span class="number">0</span>].onlinestate&#125;;</span><br><span class="line"></span><br><span class="line">			callback(err,result);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			res.json(result);</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;,</span><br><span class="line">	<span class="keyword">function</span>(result,callback)&#123;</span><br><span class="line">		// <span class="keyword">if</span>(result.onlinestate==<span class="number">0</span>)&#123;</span><br><span class="line">			var localcontent = result.localcontent;</span><br><span class="line">			var contentids = new Array();</span><br><span class="line">			contentids = localcontent.split(<span class="string">'|'</span>);</span><br><span class="line">			content.getContentsByProductId(contentids,<span class="keyword">function</span>(err,result)&#123;</span><br><span class="line"></span><br><span class="line">				callback(err,result);</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">		// &#125;<span class="keyword">else</span>&#123;</span><br><span class="line"></span><br><span class="line">		// &#125;</span><br><span class="line">	&#125;],<span class="keyword">function</span>(err,result)&#123;</span><br><span class="line">		<span class="keyword">if</span>(err)&#123;</span><br><span class="line">			res.json(&#123;status: <span class="string">"500"</span>, message: err&#125;);</span><br><span class="line">			<span class="built_in">return</span>;	</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			res.json(result);</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<h2 id="总结：">总结：</h2><p>   nodejs并没有像php，java有那么多成熟的开源的框架，或者工具可以用，很多时候包括底层的sql都得自己写，这样的话，整个项目的架构就要想的很清楚，最好还是按照mvc的分层来架构，自己写写底层的东西还是很有意思的</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
         </div>
@@ -1188,7 +1252,7 @@ req.body.xxxxx 获取从<span class="built_in">post</span>中的变量
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
