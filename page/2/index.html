@@ -179,11 +179,107 @@
 
     
     
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/14/xjx-2/" itemprop="url">
+                  mysql心得(一)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-12-14T19:46:14+08:00" content="2015-12-14">
+              2015-12-14
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
       
       
 
       
-    
+        
+          <span itemprop="articleBody">
+            
+              <p>本周研究了一些数据库连接方面的知识</p>
+<h1 id="外连接">外连接</h1><h2 id="左外连接">左外连接</h2><p>1.语法</p>
+<p>select a.<em>,b.</em> from a left join b on a.id = b.id;</p>
+<p>2.效果</p>
+<p>左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行</p>
+<h2 id="右外连接">右外连接</h2><p>1.语法</p>
+<p>select a.<em>,b.</em> from a right join b on a.id = b.id;</p>
+<p>2.效果</p>
+<p>右外连接的结果集包括right join 指定的右表的所有行，而不仅仅是连接所匹配的行</p>
+<h2 id="交叉连接">交叉连接</h2><p>1.语法</p>
+<p>select a.<em>,b.</em> from a cross join b;</p>
+<p>2.效果</p>
+<p>a表和b表的笛卡尔积</p>
+<h2 id="完全连接">完全连接</h2><p>1.语法</p>
+<p>select a.<em>,b.</em> from a full join b ;</p>
+<p>2.效果</p>
+<p>两个表的全部数据都有，不匹配用null表示</p>
+<h1 id="内连接">内连接</h1><p>典型的连接运算<br>1.语法</p>
+<p>select a.<em>,b.</em> from a join b on a.id = b.id;</p>
+<p>2.效果</p>
+<p>利用内连接可获取两表的公共部分的记录。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -336,7 +432,7 @@ req.body.xxxxx 获取从<span class="built_in">post</span>中的变量
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

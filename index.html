@@ -202,6 +202,105 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/14/xjx-10/" itemprop="url">
+                  百度外卖面试总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-14T21:44:10+08:00" content="2016-04-14">
+              2016-04-14
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="php写单例模式">php写单例模式</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"></span><br><span class="line">class <span class="function"><span class="title">singleton</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">		private  <span class="variable">$_handle</span> = null;</span><br><span class="line"></span><br><span class="line">		private static <span class="variable">$_instance</span> = null;</span><br><span class="line"></span><br><span class="line">		private <span class="keyword">function</span> <span class="function"><span class="title">_construct</span></span>()&#123;</span><br><span class="line">			<span class="variable">$this</span>-&gt;_handle = new stdclass();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public <span class="keyword">function</span> <span class="function"><span class="title">_clone</span></span>()&#123;</span><br><span class="line">			<span class="built_in">echo</span> <span class="string">"function clone is not allow"</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		private static <span class="keyword">function</span> <span class="function"><span class="title">getInstance</span></span>()&#123;</span><br><span class="line">			<span class="keyword">if</span>(self::<span class="variable">$_instance</span>==null)&#123;</span><br><span class="line"></span><br><span class="line">				self::<span class="variable">$_instance</span> = new self();</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">return</span> self::<span class="variable">$_instance</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public <span class="keyword">function</span> <span class="function"><span class="title">getobj</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">return</span> <span class="variable">$this</span>-&gt;_handle;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="php_各个版本之间的不同">php 各个版本之间的不同</h1><p>php的分支主要有四个，php5.2之前的版本，php5.2x，php5.3，php 5.5，php 7</p>
+<p>##php5.2</p>
+<h3 id="_autoload">_autoload</h3><p>当代码中使用一个未定义的类的时候，该函数就会被调用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="keyword">function</span> _<span class="built_in">autoload</span>(<span class="variable">$classname</span>)&#123;</span><br><span class="line"> require_once(<span class="string">"&#123;<span class="variable">$classname</span>&#125;.php"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是该函数已经不被建议<br>使用，原因是，php不允许函数函数重名，但是用一些类库时候难免会出现多个autoload的需要，于是sql_autoload_register()取而代之。sql_autoload_register()会将一个函数注册到autoload函数列表中</p>
+<h3 id="PDO和MySQLi">PDO和MySQLi</h3><p>即php数据对象</p>
+<p>传统风格<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"> // 连接到服务器，选择数据库</span><br><span class="line"><span class="variable">$conn</span> = mysql_connect(<span class="string">"localhost"</span>, <span class="string">"user"</span>, <span class="string">"password"</span>);</span><br><span class="line">mysql_select_db(<span class="string">"database"</span>);</span><br><span class="line">// 执行 SQL 查询</span><br><span class="line"><span class="variable">$type</span> = <span class="variable">$_POST</span>[<span class="string">'type'</span>];</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">"SELECT * FROM `table` WHERE `type` = &#123;<span class="variable">$type</span>&#125;"</span>;</span><br><span class="line"><span class="variable">$result</span> = mysql_query(<span class="variable">$sql</span>);</span><br><span class="line">// 打印结果</span><br><span class="line"><span class="keyword">while</span>(<span class="variable">$row</span> = mysql_fetch_array(<span class="variable">$result</span>, MYSQL_ASSOC))</span><br><span class="line">&#123;</span><br><span class="line">    foreach(<span class="variable">$row</span> as <span class="variable">$k</span> =&gt; <span class="variable">$v</span>)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"&#123;<span class="variable">$k</span>&#125;: &#123;<span class="variable">$v</span>&#125;\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line">// 释放结果集，关闭连接</span><br><span class="line">mysql_free_result(<span class="variable">$result</span>);</span><br><span class="line">mysql_close(<span class="variable">$conn</span>);</span><br></pre></td></tr></table></figure></p>
+<p>为了能够让代码实现数据库无关<br>php设计了PDO</p>
+<p>1.面向对象风格的接口<br>2.SQL预编译(prepare), 占位符语法<br>3.更高的执行效率，作为官方推荐，有特别的性能优化<br>4.支持大部分SQL数据库，更换数据库无需改动代码<br>上面的代码用 PDO 实现将会是这样：<br>代码如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 连接到数据库</span><br><span class="line"><span class="variable">$conn</span> = new PDO(<span class="string">"mysql:host=localhost;dbname=database"</span>, <span class="string">"user"</span>, <span class="string">"password"</span>);</span><br><span class="line">// 预编译SQL, 绑定参数</span><br><span class="line"><span class="variable">$query</span> = <span class="variable">$conn</span>-&gt;prepare(<span class="string">"SELECT * FROM `table` WHERE `type` = :type"</span>);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="built_in">bind</span>Param(<span class="string">"type"</span>, <span class="variable">$_POST</span>[<span class="string">'type'</span>]);</span><br><span class="line">// 执行查询并打印结果</span><br><span class="line">foreach(<span class="variable">$query</span>-&gt;execute() as <span class="variable">$row</span>)</span><br><span class="line">&#123;</span><br><span class="line">    foreach(<span class="variable">$row</span> as <span class="variable">$k</span> =&gt; <span class="variable">$v</span>)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"&#123;<span class="variable">$k</span>&#125;: &#123;<span class="variable">$v</span>&#125;\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="json支持">json支持</h3><p>包括 json_encode(), json_decode() 等函数，JSON 算是在 Web 领域非常常用的数据交换格式，可以被 JS 直接支持，JSON 实际上是 JS 语法的一部分。<br>JSON 系列函数，可以将 PHP 中的数组结构与 JSON 字符串进行转换：<br>代码如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$array</span> = [<span class="string">"key"</span> =&gt; <span class="string">"value"</span>, <span class="string">"array"</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]];</span><br><span class="line"><span class="variable">$json</span> = json_encode(<span class="variable">$array</span>);</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"&#123;<span class="variable">$json</span>&#125;\n"</span>;</span><br><span class="line"><span class="variable">$object</span> = json_decode(<span class="variable">$json</span>);</span><br><span class="line"><span class="built_in">print</span>_r(<span class="variable">$object</span>);</span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">代码如下:</span><br><span class="line">&#123;<span class="string">"key"</span>:<span class="string">"value"</span>,<span class="string">"array"</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]&#125;</span><br><span class="line">stdClass Object</span><br><span class="line">(</span><br><span class="line">    [key] =&gt; value</span><br><span class="line">    [array] =&gt; Array</span><br><span class="line">        (</span><br><span class="line">            [<span class="number">0</span>] =&gt; <span class="number">1</span></span><br><span class="line">            [<span class="number">1</span>] =&gt; <span class="number">2</span></span><br><span class="line">            [<span class="number">2</span>] =&gt; <span class="number">3</span></span><br><span class="line">            [<span class="number">3</span>] =&gt; <span class="number">4</span></span><br><span class="line">        )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">值得注意的是 json_decode() 默认会返回一个对象而非数组，如果需要返回数组需要将第二个参数设置为 true.</span><br><span class="line"></span><br><span class="line"><span class="comment">## PHP5.3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 匿名函数</span></span><br><span class="line"></span><br><span class="line">``` bash</span><br><span class="line"></span><br><span class="line"><span class="variable">$func</span> = <span class="keyword">function</span>(<span class="variable">$arg</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">print</span> <span class="variable">$arg</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="variable">$func</span>(<span class="string">"Hello World"</span>);</span><br></pre></td></tr></table></figure>
+<p>匿名函数还可以用 use 关键字来捕捉外部变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> arrayPlus(<span class="variable">$array</span>, <span class="variable">$num</span>)</span><br><span class="line">&#123;</span><br><span class="line">    array_walk(<span class="variable">$array</span>, <span class="keyword">function</span>(&amp;<span class="variable">$v</span>) use(<span class="variable">$num</span>)&#123;</span><br><span class="line">        <span class="variable">$v</span> += <span class="variable">$num</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="魔术方法_invoke(),_callStatic()">魔术方法 <strong>invoke(), </strong>callStatic()</h3><p>__invoke 会在一个对象作为函数调用时被调用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">    public <span class="keyword">function</span> __invoke(<span class="variable">$str</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"A::__invoke(): &#123;<span class="variable">$str</span>&#125;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = new A;</span><br><span class="line"><span class="variable">$a</span>(<span class="string">"Hello World"</span>);</span><br><span class="line"></span><br><span class="line">输出毫无疑问是：</span><br><span class="line">代码如下:</span><br><span class="line">A::__invoke(): Hello World</span><br></pre></td></tr></table></figure>
+<p>__callStatic则会在调用一个不存在的静态方法时被调用</p>
+<p>其余特性，未完待续</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/27/ModernPhp/" itemprop="url">
                   ModernPhp读书笔记（一）
                 </a>
@@ -285,45 +384,15 @@
 <pre><code>如果要实现读取流资源，则定义StreamDocument类
 </code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line">class StreamDocument implements Documentable</span><br><span class="line">&#123;</span><br><span class="line">	protected $resource;</span><br><span class="line">	protected $buffer;</span><br><span class="line"></span><br><span class="line">	public function _construct($resouce,$buffer = 4096)</span><br><span class="line">	&#123;</span><br><span class="line">		$this-&gt;resource = $resource;</span><br><span class="line">		$this-&gt;buffer = $buffer;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public function getId()</span><br><span class="line">	&#123;</span><br><span class="line">		return 'resource-'.(int)$this-&gt;resource;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public function getContent()</span><br><span class="line">	&#123;</span><br><span class="line">		$streamContent = '';</span><br><span class="line">		rewind($this-&gt;resource);</span><br><span class="line">		while(feof($this-&gt;resource)==false)&#123;</span><br><span class="line">			$streamContent .= fread($this-&gt;resource,$this-&gt;buffer);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return $streamContent;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <pre><code>如果要实现获取终端命令的执行结果的类
-</code></pre><pre><code class="cpp">
-<span class="keyword">class</span> CommandOutputDocument implements Documentable
-{ 
-    <span class="keyword">protected</span> $command;
-
-    <span class="keyword">public</span> function _construct($command)
-    {
-        $<span class="keyword">this</span>-&gt;command = $command;
-    }
-
-    <span class="function"><span class="keyword">public</span> function <span class="title">getId</span><span class="params">()</span>
-    </span>{
-        <span class="keyword">return</span> $<span class="keyword">this</span>-&gt;command;
-    }
-
-    <span class="function"><span class="keyword">public</span> function <span class="title">getContent</span><span class="params">()</span>
-    </span>{
-        <span class="keyword">return</span> shell_exec($<span class="keyword">this</span>-&gt;command);
-    }
-}
-</code></pre>
-<pre><code>使用DocumentStore类
-</code></pre><pre><code class="cpp">
-$documentStore = new DocumentStore();
-
-//添加html文档；
-$htmlDoc = new HtmlDocument('https://php.net');
-$documentStore-&gt;addDocument($htmlDoc);
-
-//添加流文档；
-$streamDoc = new StreamDocument(fopen('stream.txt','rb'));
-$documentStore-&gt;addDocument($streamDoc);
-
-//添加终端命令文档
-$cmdDoc = new CommandOutputDocument('cat /etc/hosts');
-$documentStore-&gt;addDocument($cmdDoc);
-
-print_r($documentStore-&gt;getDocument());
-</code></pre>
+</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line">    class CommandOutputDocument implements Documentable</span><br><span class="line">    &#123; </span><br><span class="line">		protected $command;</span><br><span class="line"></span><br><span class="line">		public function _construct($command)</span><br><span class="line">		&#123;</span><br><span class="line">			$this-&gt;command = $command;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public function getId()</span><br><span class="line">		&#123;</span><br><span class="line">			return $this-&gt;command;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public function getContent()</span><br><span class="line">		&#123;</span><br><span class="line">			return shell_exec($this-&gt;command);</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">    使用DocumentStore类</span><br><span class="line"></span><br><span class="line">``` cpp</span><br><span class="line"></span><br><span class="line">    $documentStore = new DocumentStore();</span><br><span class="line"></span><br><span class="line">    //添加html文档；</span><br><span class="line">    $htmlDoc = new HtmlDocument('https://php.net');</span><br><span class="line">    $documentStore-&gt;addDocument($htmlDoc);</span><br><span class="line"></span><br><span class="line">    //添加流文档；</span><br><span class="line">    $streamDoc = new StreamDocument(fopen('stream.txt','rb'));</span><br><span class="line">    $documentStore-&gt;addDocument($streamDoc);</span><br><span class="line"></span><br><span class="line">    //添加终端命令文档</span><br><span class="line">    $cmdDoc = new CommandOutputDocument('cat /etc/hosts');</span><br><span class="line">    $documentStore-&gt;addDocument($cmdDoc);</span><br><span class="line"></span><br><span class="line">    print_r($documentStore-&gt;getDocument());</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">### 使用性状</span><br><span class="line"></span><br><span class="line">两个无关的php类具有类似的行为，比如RetailStore和Car两个php类的作用十分不同，而在继承层次结构中没有共同的父类，不过这两个类都应该使用地理编码技术转换成经纬度</span><br><span class="line"></span><br><span class="line">#### 创建性状</span><br><span class="line"></span><br><span class="line">``` cpp</span><br><span class="line">     </span><br><span class="line">    &lt;?php</span><br><span class="line">    trait Geocoable&#123;</span><br><span class="line">        protected $address;</span><br><span class="line"></span><br><span class="line">        protected $geocoder;</span><br><span class="line"></span><br><span class="line">        protected $geocoderResult;</span><br><span class="line"></span><br><span class="line">        public function setGeocoder(\Geocoder\GeocoderInterface $geocoder)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            $this-&gt;geocoder = $geocoder;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public function setAddress($address)</span><br><span class="line">        &#123;</span><br><span class="line">            $this-&gt;address = $address;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public function getLatitude()</span><br><span class="line">        &#123;</span><br><span class="line">            if(isset($this-&gt;geocoderResult) === false)&#123;</span><br><span class="line">                $this-&gt;geocoderAddress();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return $this-&gt;geocoderResult-&gt;getLatitude();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public function getLongitude()</span><br><span class="line">        &#123;</span><br><span class="line">            if(isset($this-&gt;geocoderResult) === false) &#123;</span><br><span class="line">                $this-&gt;geocoderAddress();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return $this-&gt;geocoderResult-&gt;getLongitude();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected function geocoderAddress()</span><br><span class="line">        &#123;</span><br><span class="line">            $this-&gt;geocoderResult = $this-&gt;geocoder-&gt;geocode($this-&gt;address);</span><br><span class="line"></span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">```     </span><br><span class="line">这里有四个公开的方法和一个受保护的方法，  geocoderAddress()方法把地址字符串传给Geocoder实例，获取经地理编码器处理得到的结果。</span><br><span class="line"></span><br><span class="line">#### 如何使用性状</span><br><span class="line"></span><br><span class="line">``` cpp</span><br><span class="line"></span><br><span class="line">    &lt;?php </span><br><span class="line">     class myclass</span><br><span class="line">     &#123;</span><br><span class="line">        use MyTrait;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="生成器">生成器</h3><p>优雅的生成器</p>
+<p>平常的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?<span class="function">php</span><br><span class="line">function <span class="title">makeRange</span><span class="params">($length)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    $dataset = [];</span><br><span class="line">    <span class="keyword">for</span>($i = <span class="number">0</span>;$i&lt;$length;$i++)&#123;</span><br><span class="line">        $dataset[] = $i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> $dataset;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$customRange = makeRange(<span class="number">1000000</span>);</span><br><span class="line"></span><br><span class="line">foreach($customRange as $i)&#123;</span><br><span class="line"></span><br><span class="line">    echo $i,PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>优雅的写法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?<span class="function">php</span><br><span class="line">function <span class="title">makeRange</span><span class="params">($length)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    $dataset = [];</span><br><span class="line">    <span class="keyword">for</span>($i = <span class="number">0</span>;$i&lt;$length;$i++)&#123;</span><br><span class="line">        yield $i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">foreach(makeRange(<span class="number">1000000</span>) as $i)&#123;</span><br><span class="line"></span><br><span class="line">    echo $i,PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="闭包">闭包</h3><p>php也有闭包哦</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$closure = function ($name) &#123;</span><br><span class="line">    return sprintf('hello %s',$name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">echo $closure('josh');</span><br></pre></td></tr></table></figure>
+<p>闭包实现了php的<em>invoke().只要变量后面有（），php就会查找并调用</em>$invoke()方法。</p>
 
             
           </span>
@@ -1105,107 +1174,6 @@ print_r($documentStore-&gt;getDocument());
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/12/14/xjx-2/" itemprop="url">
-                  mysql心得(一)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-12-14T19:46:14+08:00" content="2015-12-14">
-              2015-12-14
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>本周研究了一些数据库连接方面的知识</p>
-<h1 id="外连接">外连接</h1><h2 id="左外连接">左外连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a left join b on a.id = b.id;</p>
-<p>2.效果</p>
-<p>左外连接的结果集包括left join 指定的左表的所有行，而不仅仅是连接所匹配的行</p>
-<h2 id="右外连接">右外连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a right join b on a.id = b.id;</p>
-<p>2.效果</p>
-<p>右外连接的结果集包括right join 指定的右表的所有行，而不仅仅是连接所匹配的行</p>
-<h2 id="交叉连接">交叉连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a cross join b;</p>
-<p>2.效果</p>
-<p>a表和b表的笛卡尔积</p>
-<h2 id="完全连接">完全连接</h2><p>1.语法</p>
-<p>select a.<em>,b.</em> from a full join b ;</p>
-<p>2.效果</p>
-<p>两个表的全部数据都有，不匹配用null表示</p>
-<h1 id="内连接">内连接</h1><p>典型的连接运算<br>1.语法</p>
-<p>select a.<em>,b.</em> from a join b on a.id = b.id;</p>
-<p>2.效果</p>
-<p>利用内连接可获取两表的公共部分的记录。</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1252,7 +1220,7 @@ print_r($documentStore-&gt;getDocument());
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -1,0 +1,628 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="php写单例模式12345678910111213141516171819202122232425262728293031	class singleton()&amp;#123;		private  $_handle = null;		private static $_instance = null;		private function _construct()&amp;#123;			$this-&amp;gt;_ha">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百度外卖面试总结">
+<meta property="og:url" content="http://yoursite.com/2016/04/14/xjx-10/index.html">
+<meta property="og:site_name" content="tmac-xjx的博客">
+<meta property="og:description" content="php写单例模式12345678910111213141516171819202122232425262728293031	class singleton()&amp;#123;		private  $_handle = null;		private static $_instance = null;		private function _construct()&amp;#123;			$this-&amp;gt;_ha">
+<meta property="og:updated_time" content="2016-04-14T14:16:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="百度外卖面试总结">
+<meta name="twitter:description" content="php写单例模式12345678910111213141516171819202122232425262728293031	class singleton()&amp;#123;		private  $_handle = null;		private static $_instance = null;		private function _construct()&amp;#123;			$this-&amp;gt;_ha">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> 百度外卖面试总结 | tmac-xjx的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">tmac-xjx的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                百度外卖面试总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-14T21:44:10+08:00" content="2016-04-14">
+              2016-04-14
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="php写单例模式">php写单例模式</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"></span><br><span class="line">class <span class="function"><span class="title">singleton</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">		private  <span class="variable">$_handle</span> = null;</span><br><span class="line"></span><br><span class="line">		private static <span class="variable">$_instance</span> = null;</span><br><span class="line"></span><br><span class="line">		private <span class="keyword">function</span> <span class="function"><span class="title">_construct</span></span>()&#123;</span><br><span class="line">			<span class="variable">$this</span>-&gt;_handle = new stdclass();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public <span class="keyword">function</span> <span class="function"><span class="title">_clone</span></span>()&#123;</span><br><span class="line">			<span class="built_in">echo</span> <span class="string">"function clone is not allow"</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		private static <span class="keyword">function</span> <span class="function"><span class="title">getInstance</span></span>()&#123;</span><br><span class="line">			<span class="keyword">if</span>(self::<span class="variable">$_instance</span>==null)&#123;</span><br><span class="line"></span><br><span class="line">				self::<span class="variable">$_instance</span> = new self();</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">return</span> self::<span class="variable">$_instance</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public <span class="keyword">function</span> <span class="function"><span class="title">getobj</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">return</span> <span class="variable">$this</span>-&gt;_handle;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="php_各个版本之间的不同">php 各个版本之间的不同</h1><p>php的分支主要有四个，php5.2之前的版本，php5.2x，php5.3，php 5.5，php 7</p>
+<p>##php5.2</p>
+<h3 id="_autoload">_autoload</h3><p>当代码中使用一个未定义的类的时候，该函数就会被调用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="keyword">function</span> _<span class="built_in">autoload</span>(<span class="variable">$classname</span>)&#123;</span><br><span class="line"> require_once(<span class="string">"&#123;<span class="variable">$classname</span>&#125;.php"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是该函数已经不被建议<br>使用，原因是，php不允许函数函数重名，但是用一些类库时候难免会出现多个autoload的需要，于是sql_autoload_register()取而代之。sql_autoload_register()会将一个函数注册到autoload函数列表中</p>
+<h3 id="PDO和MySQLi">PDO和MySQLi</h3><p>即php数据对象</p>
+<p>传统风格<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"> // 连接到服务器，选择数据库</span><br><span class="line"><span class="variable">$conn</span> = mysql_connect(<span class="string">"localhost"</span>, <span class="string">"user"</span>, <span class="string">"password"</span>);</span><br><span class="line">mysql_select_db(<span class="string">"database"</span>);</span><br><span class="line">// 执行 SQL 查询</span><br><span class="line"><span class="variable">$type</span> = <span class="variable">$_POST</span>[<span class="string">'type'</span>];</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">"SELECT * FROM `table` WHERE `type` = &#123;<span class="variable">$type</span>&#125;"</span>;</span><br><span class="line"><span class="variable">$result</span> = mysql_query(<span class="variable">$sql</span>);</span><br><span class="line">// 打印结果</span><br><span class="line"><span class="keyword">while</span>(<span class="variable">$row</span> = mysql_fetch_array(<span class="variable">$result</span>, MYSQL_ASSOC))</span><br><span class="line">&#123;</span><br><span class="line">    foreach(<span class="variable">$row</span> as <span class="variable">$k</span> =&gt; <span class="variable">$v</span>)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"&#123;<span class="variable">$k</span>&#125;: &#123;<span class="variable">$v</span>&#125;\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line">// 释放结果集，关闭连接</span><br><span class="line">mysql_free_result(<span class="variable">$result</span>);</span><br><span class="line">mysql_close(<span class="variable">$conn</span>);</span><br></pre></td></tr></table></figure></p>
+<p>为了能够让代码实现数据库无关<br>php设计了PDO</p>
+<p>1.面向对象风格的接口<br>2.SQL预编译(prepare), 占位符语法<br>3.更高的执行效率，作为官方推荐，有特别的性能优化<br>4.支持大部分SQL数据库，更换数据库无需改动代码<br>上面的代码用 PDO 实现将会是这样：<br>代码如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 连接到数据库</span><br><span class="line"><span class="variable">$conn</span> = new PDO(<span class="string">"mysql:host=localhost;dbname=database"</span>, <span class="string">"user"</span>, <span class="string">"password"</span>);</span><br><span class="line">// 预编译SQL, 绑定参数</span><br><span class="line"><span class="variable">$query</span> = <span class="variable">$conn</span>-&gt;prepare(<span class="string">"SELECT * FROM `table` WHERE `type` = :type"</span>);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="built_in">bind</span>Param(<span class="string">"type"</span>, <span class="variable">$_POST</span>[<span class="string">'type'</span>]);</span><br><span class="line">// 执行查询并打印结果</span><br><span class="line">foreach(<span class="variable">$query</span>-&gt;execute() as <span class="variable">$row</span>)</span><br><span class="line">&#123;</span><br><span class="line">    foreach(<span class="variable">$row</span> as <span class="variable">$k</span> =&gt; <span class="variable">$v</span>)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"&#123;<span class="variable">$k</span>&#125;: &#123;<span class="variable">$v</span>&#125;\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="json支持">json支持</h3><p>包括 json_encode(), json_decode() 等函数，JSON 算是在 Web 领域非常常用的数据交换格式，可以被 JS 直接支持，JSON 实际上是 JS 语法的一部分。<br>JSON 系列函数，可以将 PHP 中的数组结构与 JSON 字符串进行转换：<br>代码如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$array</span> = [<span class="string">"key"</span> =&gt; <span class="string">"value"</span>, <span class="string">"array"</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]];</span><br><span class="line"><span class="variable">$json</span> = json_encode(<span class="variable">$array</span>);</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"&#123;<span class="variable">$json</span>&#125;\n"</span>;</span><br><span class="line"><span class="variable">$object</span> = json_decode(<span class="variable">$json</span>);</span><br><span class="line"><span class="built_in">print</span>_r(<span class="variable">$object</span>);</span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">代码如下:</span><br><span class="line">&#123;<span class="string">"key"</span>:<span class="string">"value"</span>,<span class="string">"array"</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]&#125;</span><br><span class="line">stdClass Object</span><br><span class="line">(</span><br><span class="line">    [key] =&gt; value</span><br><span class="line">    [array] =&gt; Array</span><br><span class="line">        (</span><br><span class="line">            [<span class="number">0</span>] =&gt; <span class="number">1</span></span><br><span class="line">            [<span class="number">1</span>] =&gt; <span class="number">2</span></span><br><span class="line">            [<span class="number">2</span>] =&gt; <span class="number">3</span></span><br><span class="line">            [<span class="number">3</span>] =&gt; <span class="number">4</span></span><br><span class="line">        )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">值得注意的是 json_decode() 默认会返回一个对象而非数组，如果需要返回数组需要将第二个参数设置为 true.</span><br><span class="line"></span><br><span class="line"><span class="comment">## PHP5.3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 匿名函数</span></span><br><span class="line"></span><br><span class="line">``` bash</span><br><span class="line"></span><br><span class="line"><span class="variable">$func</span> = <span class="keyword">function</span>(<span class="variable">$arg</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">print</span> <span class="variable">$arg</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="variable">$func</span>(<span class="string">"Hello World"</span>);</span><br></pre></td></tr></table></figure>
+<p>匿名函数还可以用 use 关键字来捕捉外部变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> arrayPlus(<span class="variable">$array</span>, <span class="variable">$num</span>)</span><br><span class="line">&#123;</span><br><span class="line">    array_walk(<span class="variable">$array</span>, <span class="keyword">function</span>(&amp;<span class="variable">$v</span>) use(<span class="variable">$num</span>)&#123;</span><br><span class="line">        <span class="variable">$v</span> += <span class="variable">$num</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="魔术方法_invoke(),_callStatic()">魔术方法 <strong>invoke(), </strong>callStatic()</h3><p>__invoke 会在一个对象作为函数调用时被调用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">    public <span class="keyword">function</span> __invoke(<span class="variable">$str</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"A::__invoke(): &#123;<span class="variable">$str</span>&#125;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = new A;</span><br><span class="line"><span class="variable">$a</span>(<span class="string">"Hello World"</span>);</span><br><span class="line"></span><br><span class="line">输出毫无疑问是：</span><br><span class="line">代码如下:</span><br><span class="line">A::__invoke(): Hello World</span><br></pre></td></tr></table></figure>
+<p>__callStatic则会在调用一个不存在的静态方法时被调用</p>
+<p>其余特性，未完待续</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/27/ModernPhp/" rel="next" title="ModernPhp读书笔记（一）">
+                <i class="fa fa-chevron-left"></i> ModernPhp读书笔记（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/head.jpg" alt="tmac-xjx" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">tmac-xjx</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#php写单例模式"><span class="nav-number">1.</span> <span class="nav-text">php写单例模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#php_各个版本之间的不同"><span class="nav-number">2.</span> <span class="nav-text">php 各个版本之间的不同</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#_autoload"><span class="nav-number">2.0.1.</span> <span class="nav-text">_autoload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PDO和MySQLi"><span class="nav-number">2.0.2.</span> <span class="nav-text">PDO和MySQLi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#json支持"><span class="nav-number">2.0.3.</span> <span class="nav-text">json支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#魔术方法_invoke(),_callStatic()"><span class="nav-number">2.0.4.</span> <span class="nav-text">魔术方法 invoke(), callStatic()</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  Fri Nov 13 2015 08:00:00 GMT+0800 (中国标准时间) - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tmac-xjx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+    
+
+  
+
+
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>
