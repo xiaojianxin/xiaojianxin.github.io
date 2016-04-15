@@ -202,6 +202,90 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/15/xjx-11/" itemprop="url">
+                  各类排序方法总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-15T15:39:57+08:00" content="2016-04-15">
+              2016-04-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>面试中遇到各种排序，一般冒泡和直接插入不会考，要考就考快排，堆和归并排序</p>
+<h2 id="冒泡排序">冒泡排序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int a[n+<span class="number">1</span>];</span><br><span class="line">int temp;</span><br><span class="line"> <span class="keyword">for</span>(int i = <span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line"> 	<span class="keyword">for</span>(int j = <span class="number">0</span>;j&lt;n-i;j++)&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(a[j]&gt;a[j+<span class="number">1</span>])&#123;</span><br><span class="line">			</span><br><span class="line">			temp = a[j];</span><br><span class="line">			a[j] = a[j+<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">			a[j+<span class="number">1</span>] = temp;</span><br><span class="line">		&#125;</span><br><span class="line"> 	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="快速排序">快速排序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">void qsort(int a[],int left,int right)</span><br><span class="line">&#123;</span><br><span class="line">	int i = left;</span><br><span class="line">	int j = right;</span><br><span class="line"></span><br><span class="line">	int temp = a[i];</span><br><span class="line">	</span><br><span class="line">	int tmp;</span><br><span class="line">	<span class="keyword">while</span>(i&lt;j)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[j]&gt;=temp&amp;&amp;j&gt;i)</span><br><span class="line">			j--;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&lt;=temp&amp;&amp;j&gt;i)</span><br><span class="line">			i++;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(i&lt;j)&#123;</span><br><span class="line">			tmp = a[i];</span><br><span class="line">			a[i] = a[j];</span><br><span class="line">			a[j] = tmp;</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	a[left] = a[i];</span><br><span class="line">	a[i] = temp;</span><br><span class="line"></span><br><span class="line">	qsort(a[],left+<span class="number">1</span>,right);</span><br><span class="line">	qsort(a[],left,right-<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="堆排序">堆排序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">heapsort(a[])&#123;</span><br><span class="line">	</span><br><span class="line">	int n = a.size();</span><br><span class="line">	bulidheap(a[],n);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(i=n;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        swap(a[<span class="number">1</span>],a[i]);           </span><br><span class="line">        HeapAdjust(a,<span class="number">1</span>,i-<span class="number">1</span>);      //重新调整堆顶节点成为大顶堆</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bulidheap(a[],int size)&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(int i = size/<span class="number">2</span>;i&gt;<span class="number">0</span>;i--)&#123;</span><br><span class="line"></span><br><span class="line">		HeapAdjust(a[],i,size);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HeapAdjust(a[],int begin,int end)&#123;</span><br><span class="line">	</span><br><span class="line">	int lnode = <span class="number">2</span>*begin;</span><br><span class="line"></span><br><span class="line">	int rnode = <span class="number">2</span>*begin+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	int max = begin;</span><br><span class="line">	<span class="keyword">if</span>(begin&lt;=end/<span class="number">2</span>)&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(a[lnode]&gt;max&amp;&amp;lnode&lt;end)&#123;</span><br><span class="line">			max = lnode;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(a[rnode]&gt;max&amp;&amp;rnode&lt;end)&#123;</span><br><span class="line"></span><br><span class="line">			max = rnode;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(max!=begin)&#123;</span><br><span class="line"></span><br><span class="line">			swap(a[begin],a[max]);</span><br><span class="line"></span><br><span class="line">			HeapAdjust(a[],max,end);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="归并排序">归并排序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">//将有二个有序数列a[first...mid]和a[mid...last]合并。</span><br><span class="line">void mergearray(int a[], int first, int mid, int last, int temp[])</span><br><span class="line">&#123;</span><br><span class="line">	int i = first, j = mid + <span class="number">1</span>;</span><br><span class="line">	int m = mid,   n = last;</span><br><span class="line">	int k = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= m &amp;&amp; j &lt;= n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (a[i] &lt;= a[j])</span><br><span class="line">			temp[k++] = a[i++];</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			temp[k++] = a[j++];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= m)</span><br><span class="line">		temp[k++] = a[i++];</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (j &lt;= n)</span><br><span class="line">		temp[k++] = a[j++];</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">		a[first + i] = temp[i];</span><br><span class="line">&#125;</span><br><span class="line">void mergesort(int a[], int first, int last, int temp[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (first &lt; last)</span><br><span class="line">	&#123;</span><br><span class="line">		int mid = (first + last) / <span class="number">2</span>;</span><br><span class="line">		mergesort(a, first, mid, temp);    //左边有序</span><br><span class="line">		mergesort(a, mid + <span class="number">1</span>, last, temp); //右边有序</span><br><span class="line">		mergearray(a, first, mid, last, temp); //再将二个有序数列合并</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool MergeSort(int a[], int n)</span><br><span class="line">&#123;</span><br><span class="line">	int *p = new int[n];</span><br><span class="line">	<span class="keyword">if</span> (p == NULL)</span><br><span class="line">		<span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">	mergesort(a, <span class="number">0</span>, n - <span class="number">1</span>, p);</span><br><span class="line">	delete[] p;</span><br><span class="line">	<span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/14/xjx-10/" itemprop="url">
                   百度外卖面试总结
                 </a>
@@ -1080,100 +1164,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/08/xjx-3/" itemprop="url">
-                  php header函数 修改头部
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-08T17:24:02+08:00" content="2016-01-08">
-              2016-01-08
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h3 id="php修改http请求头部">php修改http请求头部</h3><p> 在用Yii2.0写restful接口的过程中有这样的一个疑问：</p>
-<p> restful接口既然是完全按照http的规范来定义的，那么restful接口的状态到底应该写在哪一部分？</p>
-<p> 是body里面的数据，还是直接标明请求的状态？</p>
-<p> 对于这个问题大家各执一词，不过现在的问题是，如果我要修改http请求的header该如何做呢？</p>
-<h2 id="header()详解">header()详解</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">void header ( string <span class="variable">$string</span> [, bool <span class="variable">$replace</span> = <span class="literal">true</span> [, int <span class="variable">$http_response_code</span> ]] )</span><br></pre></td></tr></table></figure>
-<p> 1.重定向</p>
-<p> header(“Location: <a href="http://www.baidu.com" target="_blank" rel="external">http://www.baidu.com</a>“);</p>
-<p> exit();//在每个重定向之后都必须加上“exit”,避免发生错误后，继续执行。</p>
-<p> 它不仅把报文发送给浏览器，而且还将返回给浏览器一个 REDIRECT（302）的状态码，除非状态码已经事先被设置为了201或者3xx。</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php </span><br><span class="line">/** </span><br><span class="line">@title:PHP定时跳转 </span><br><span class="line">@功能:等待指定的时间，然后再跳转到指定页面（代替html meta方式） </span><br><span class="line">*/ </span><br><span class="line">header(<span class="string">"refresh:3;url=http://www.baidu.com"</span>); </span><br><span class="line"><span class="built_in">print</span>(<span class="string">'正在加载，请稍等...&lt;br&gt;三秒后自动跳转~~~'</span>); </span><br><span class="line">/* </span><br><span class="line">补充说明： </span><br><span class="line">若等待时间为<span class="number">0</span>，则与header(<span class="string">"location:"</span>)等效。 </span><br><span class="line">*/ </span><br><span class="line">header重定向 就等价于替用户在地址栏输入url</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p> 2.修改请求状态码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(<span class="string">"HTTP/1.0 404 Not Found"</span>);</span><br><span class="line"><span class="built_in">exit</span>();//php手册当中没有写，实测得加上</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>以上是两种特殊的string</p>
-<p>其他具体功能可以具体google  or  baidu</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1220,7 +1210,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
