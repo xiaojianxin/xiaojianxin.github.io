@@ -241,7 +241,10 @@
           <span itemprop="articleBody">
             
               <h1 id="类的自动加载">类的自动加载</h1><h2 id="autoload()函数">autoload()函数</h2><p>以下引用自php手册：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">很多开发者写面向对象的应用程序时对每个类的定义建立一个 PHP 源文件。一个很大的烦恼是不得不在每个脚本开头写一个长长的包含文件列表（每个类一个文件）。</span><br><span class="line"></span><br><span class="line">在 PHP <span class="number">5</span> 中，不再需要这样了。可以定义一个 __<span class="built_in">autoload</span>() 函数，它会在试图使用尚未被定义的类时自动调用。通过调用此函数，脚本引擎在 PHP 出错失败前有了最后一个机会加载所需的类。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>很多开发者写面向对象的应用程序时对每个类的定义建立一个 PHP 源文件。一个很大的烦恼是不得不在每个脚本开头写一个长长的包含文件列表（每个类一个文件）。</p>
+<p>在 PHP 5 中，不再需要这样了。可以定义一个 __autoload() 函数，它会在试图使用尚未被定义的类时自动调用。通过调用此函数，脚本引擎在 PHP 出错失败前有了最后一个机会加载所需的类。</p>
+</blockquote>
 <p>例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"> <span class="keyword">function</span> __<span class="built_in">autoload</span>(<span class="variable">$classname</span>) &#123;</span><br><span class="line">  require_once (<span class="variable">$classname</span> . “class.php”);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="variable">$person</span> = new Person(”Altair”, <span class="number">6</span>);</span><br><span class="line"> var_dump (<span class="variable">$person</span>);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
 <p>但是如果，你的项目引用了别人的一个项目，你的项目中有一个<strong>autoload，别人的项目也有一个</strong>autoload,这样两个<strong>autoload就冲突了。解决的办法就是修改</strong>autoload成为一个，这无疑是非常繁琐的。</p>
 <p>spl_autoload_register() 提供了一种更加灵活的方式来实现类的自动加载。因此，不再建议使用 __autoload() 函数，在以后的版本中它可能被弃用</p>
