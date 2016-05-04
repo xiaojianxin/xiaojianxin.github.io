@@ -202,6 +202,112 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/04/mysql-date/" itemprop="url">
+                  mysql的数据类型之date
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-05-04T21:34:07+08:00" content="2016-05-04">
+              2016-05-04
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="引言">引言</h2><p>上周去滴滴打车面试，遇到这么一个问题：</p>
+<p>假设数据表的字段是 时间，用户，评分。评分大于等于9的是支持，给定一个日期，算出截止到这个日期的这个月的支持人数。</p>
+<p>其中时间是用date来存储的。</p>
+<h2 id="date类型探究">date类型探究</h2><p>之前所有的项目遇到日期，都是存的时间戳，虽然计算方便，但是对于用户并不是十分友好。</p>
+<p>MySQL 使用下列数据类型在数据库中存储日期或日期/时间值：</p>
+<blockquote>
+<p>DATE - 格式 YYYY-MM-DD<br>DATETIME - 格式: YYYY-MM-DD HH:MM:SS<br>TIMESTAMP - 格式: YYYY-MM-DD HH:MM:SS<br>YEAR - 格式 YYYY 或 YY</p>
+</blockquote>
+<p>以下是mysql 中最重要的内建日期函数：</p>
+<blockquote>
+<p>NOW()    返回当前的日期和时间<br>CURDATE()    返回当前的日期<br>CURTIME()    返回当前的时间<br>DATE()    提取日期或日期/时间表达式的日期部分<br>EXTRACT()    返回日期/时间按的单独部分<br>DATE_ADD()    给日期添加指定的时间间隔<br>DATE_SUB()    从日期减去指定的时间间隔<br>DATEDIFF()    返回两个日期之间的天数<br>DATE_FORMAT()    用不同的格式显示日期/时间</p>
+</blockquote>
+<p>mysql date 选取函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> @dt = <span class="string">'2008-09-10 07:15:30.123456'</span>;</span><br><span class="line"></span><br><span class="line">select date(@dt); -- <span class="number">2008</span>-<span class="number">09</span>-<span class="number">10</span></span><br><span class="line">select time(@dt); -- <span class="number">07</span>:<span class="number">15</span>:<span class="number">30.123456</span></span><br><span class="line">select year(@dt); -- <span class="number">2008</span></span><br><span class="line">select quarter(@dt); -- <span class="number">3</span></span><br><span class="line">select month(@dt); -- <span class="number">9</span></span><br><span class="line">select week(@dt); -- <span class="number">36</span></span><br><span class="line">select day(@dt); -- <span class="number">10</span></span><br><span class="line">select hour(@dt); -- <span class="number">7</span></span><br><span class="line">select minute(@dt); -- <span class="number">15</span></span><br><span class="line">select second(@dt); -- <span class="number">30</span></span><br><span class="line">select microsecond(@dt); -- <span class="number">123456</span></span><br></pre></td></tr></table></figure>
+<p>MySQL Extract() 函数，可以上面实现类似的功能：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> @dt = <span class="string">'2008-09-10 07:15:30.123456'</span>;</span><br><span class="line"></span><br><span class="line">select extract(year from @dt); -- <span class="number">2008</span></span><br><span class="line">select extract(quarter from @dt); -- <span class="number">3</span></span><br><span class="line">select extract(month from @dt); -- <span class="number">9</span></span><br><span class="line">select extract(week from @dt); -- <span class="number">36</span></span><br><span class="line">select extract(day from @dt); -- <span class="number">10</span></span><br><span class="line">select extract(hour from @dt); -- <span class="number">7</span></span><br><span class="line">select extract(minute from @dt); -- <span class="number">15</span></span><br><span class="line">select extract(second from @dt); -- <span class="number">30</span></span><br><span class="line">select extract(microsecond from @dt); -- <span class="number">123456</span></span><br><span class="line"></span><br><span class="line">select extract(year_month from @dt); -- <span class="number">200809</span></span><br><span class="line">select extract(day_hour from @dt); -- <span class="number">1007</span></span><br><span class="line">select extract(day_minute from @dt); -- <span class="number">100715</span></span><br><span class="line">select extract(day_second from @dt); -- <span class="number">10071530</span></span><br><span class="line">select extract(day_microsecond from @dt); -- <span class="number">10071530123456</span></span><br><span class="line">select extract(hour_minute from @dt); -- <span class="number">715</span></span><br><span class="line">select extract(hour_second from @dt); -- <span class="number">71530</span></span><br><span class="line">select extract(hour_microsecond from @dt); -- <span class="number">71530123456</span></span><br><span class="line">select extract(minute_second from @dt); -- <span class="number">1530</span></span><br><span class="line">select extract(minute_microsecond from @dt); -- <span class="number">1530123456</span></span><br><span class="line">select extract(second_microsecond from @dt); -- <span class="number">30123456</span></span><br></pre></td></tr></table></figure>
+<p>MySQL dayof… 函数：dayofweek(), dayofmonth(), dayofyear()<br>分别返回日期参数，在一周、一月、一年中的位置。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> @dt = <span class="string">'2008-08-08'</span>;</span><br><span class="line"></span><br><span class="line">select dayofweek(@dt); -- <span class="number">6</span></span><br><span class="line">select dayofmonth(@dt); -- <span class="number">8</span></span><br><span class="line">select dayofyear(@dt); -- <span class="number">221</span></span><br></pre></td></tr></table></figure>
+<p>MySQL week… 函数：week(), weekofyear(), dayofweek(), weekday(), yearweek()</p>
+<p>WEEK(date,first)返回date是一年的第几周(first默认值0,first取值1表示周一是周的开始,0从周日开始)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> @dt = <span class="string">'2008-08-08'</span>;</span><br><span class="line"></span><br><span class="line">select week(@dt); -- <span class="number">31</span></span><br><span class="line">select week(@dt,<span class="number">3</span>); -- <span class="number">32</span></span><br><span class="line">select weekofyear(@dt); -- <span class="number">32</span></span><br><span class="line"></span><br><span class="line">select dayofweek(@dt); -- <span class="number">6</span></span><br><span class="line">select weekday(@dt); -- <span class="number">4</span></span><br><span class="line"></span><br><span class="line">select yearweek(@dt); -- <span class="number">200831</span></span><br></pre></td></tr></table></figure>
+<p>MySQL 返回星期和月份名称函数：dayname(), monthname()<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> @dt = <span class="string">'2008-08-08'</span>;</span><br><span class="line"></span><br><span class="line">select dayname(@dt); -- Friday</span><br><span class="line">select monthname(@dt); -- August</span><br></pre></td></tr></table></figure></p>
+<p>MySQL last_day() 函数：返回月份中的最后一天。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_day(<span class="string">'2008-02-01'</span>); -- <span class="number">2008</span>-<span class="number">02</span>-<span class="number">29</span></span><br><span class="line">select last_day(<span class="string">'2008-08-08'</span>); -- <span class="number">2008</span>-<span class="number">08</span>-<span class="number">31</span></span><br></pre></td></tr></table></figure>
+<p>MySQL last_day() 函数非常有用，比如我想得到当前月份中有多少天，可以这样来计算：<br>mysql&gt; select now(), day(last_day(now())) as days;</p>
+<p>+———————+——+<br>| now() | days |<br>+———————+——+<br>| 2008-08-09 11:45:45 | 31 |<br>+———————+——+</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/03/phpAutoload/" itemprop="url">
                   php类的自动加载
                 </a>
@@ -1101,112 +1207,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/16/xjx-4/" itemprop="url">
-                  YII2.0 ActiveRecord(一)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-16T21:11:35+08:00" content="2016-03-16">
-              2016-03-16
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p> 好久没有更新博客了，最近在刷leetcode，过一段时间写上leetcode的题解</p>
-<h1 id="YII2-0">YII2.0</h1><h2 id="ActiveRecord">ActiveRecord</h2><p> 1.Active Record 提供了一个面向对象的数据库访问接口，是Yii对ORM的实现。一个Active Record类和一张数据库表相关联， 一个Active Record实例则对应于表的一行，而Active Record实例的一个属性则对应于该行中的一列数据。</p>
-<p> 相对于传统的sql，ActiveRecord可以已面向对象的方式操作数据库</p>
-<p> 2.查询数据库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> <span class="variable">$customers</span> = Customer::find()</span><br><span class="line">    -&gt;<span class="built_in">where</span>([<span class="string">'status'</span> =&gt; Customer::STATUS_ACTIVE])</span><br><span class="line">    -&gt;orderBy(<span class="string">'id'</span>)</span><br><span class="line">    -&gt;all();</span><br><span class="line"></span><br><span class="line">// to <span class="built_in">return</span> a single customer whose ID is <span class="number">1</span>:</span><br><span class="line"><span class="variable">$customer</span> = Customer::find()</span><br><span class="line">    -&gt;<span class="built_in">where</span>([<span class="string">'id'</span> =&gt; <span class="number">1</span>])</span><br><span class="line">    -&gt;one();</span><br><span class="line"></span><br><span class="line">// to <span class="built_in">return</span> the number of *active* customers:</span><br><span class="line"><span class="variable">$count</span> = Customer::find()</span><br><span class="line">    -&gt;<span class="built_in">where</span>([<span class="string">'status'</span> =&gt; Customer::STATUS_ACTIVE])</span><br><span class="line">    -&gt;count();</span><br><span class="line"></span><br><span class="line">// to index the result by customer IDs:</span><br><span class="line"><span class="variable">$customers</span> = Customer::find()-&gt;indexBy(<span class="string">'id'</span>)-&gt;all();</span><br><span class="line">// <span class="variable">$customers</span> array is indexed by customer IDs</span><br><span class="line"></span><br><span class="line">// to retrieve customers using a raw SQL statement:</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">'SELECT * FROM customer'</span>;</span><br><span class="line"><span class="variable">$customers</span> = Customer::findBySql(<span class="variable">$sql</span>)-&gt;all();</span><br></pre></td></tr></table></figure>
-<p> 其中Customer::STATUS_ACTIVE是一个常量</p>
-<p> 3.批量查询</p>
-<p> 如果一次查询数据量太大，太吃内存。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">foreach (Customer::find()-&gt;batch(<span class="number">10</span>) as <span class="variable">$customers</span>) &#123;</span><br><span class="line">    // <span class="variable">$customers</span> is an array of <span class="number">10</span> or fewer Customer objects</span><br><span class="line">&#125;</span><br><span class="line">// fetch <span class="number">10</span> customers at a time and iterate them one by one</span><br><span class="line">foreach (Customer::find()-&gt;each(<span class="number">10</span>) as <span class="variable">$customer</span>) &#123;</span><br><span class="line">    // <span class="variable">$customer</span> is a Customer object</span><br><span class="line">&#125;</span><br><span class="line">// batch query with eager loading</span><br><span class="line">foreach (Customer::find()-&gt;with(<span class="string">'orders'</span>)-&gt;each() as <span class="variable">$customer</span>) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p> 4.操作数据库数据</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> // to insert a new customer record</span><br><span class="line"><span class="variable">$customer</span> = new Customer();</span><br><span class="line"><span class="variable">$customer</span>-&gt;name = <span class="string">'James'</span>;</span><br><span class="line"><span class="variable">$customer</span>-&gt;email = <span class="string">'james@example.com'</span>;</span><br><span class="line"><span class="variable">$customer</span>-&gt;save();  // equivalent to <span class="variable">$customer</span>-&gt;insert();</span><br><span class="line"></span><br><span class="line">// to update an existing customer record</span><br><span class="line"><span class="variable">$customer</span> = Customer::findOne(<span class="variable">$id</span>);</span><br><span class="line"><span class="variable">$customer</span>-&gt;email = <span class="string">'james@example.com'</span>;</span><br><span class="line"><span class="variable">$customer</span>-&gt;save();  // equivalent to <span class="variable">$customer</span>-&gt;update();</span><br><span class="line"></span><br><span class="line">// to delete an existing customer record</span><br><span class="line"><span class="variable">$customer</span> = Customer::findOne(<span class="variable">$id</span>);</span><br><span class="line"><span class="variable">$customer</span>-&gt;delete();</span><br><span class="line"></span><br><span class="line">// to delete several customers</span><br><span class="line">Customer::deleteAll(<span class="string">'age &gt; :age AND gender = :gender'</span>, [<span class="string">':age'</span> =&gt; <span class="number">20</span>, <span class="string">':gender'</span> =&gt; <span class="string">'M'</span>]);</span><br><span class="line"></span><br><span class="line">// to increment the age of ALL customers by <span class="number">1</span></span><br><span class="line">Customer::updateAllCounters([<span class="string">'age'</span> =&gt; <span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
-<p> 5.关联查询</p>
-<p>  因为对于ActiveRecord来说，如果存在关联关系，那么在类当中也要把关系表明所以就有例中所示 一个订单对应一个消费者，一个消费者对应多个订单。</p>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">	class Customer extends \yii\db\ActiveRecord</span><br><span class="line">&#123;</span><br><span class="line">    public <span class="keyword">function</span> <span class="function"><span class="title">getOrders</span></span>()</span><br><span class="line">    &#123;</span><br><span class="line">        // Customer has_many Order via Order.customer_id -&gt; id</span><br><span class="line">        <span class="built_in">return</span> <span class="variable">$this</span>-&gt;hasMany(Order::className(), [<span class="string">'customer_id'</span> =&gt; <span class="string">'id'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Order extends \yii\db\ActiveRecord</span><br><span class="line">&#123;</span><br><span class="line">    // Order has_one Customer via Customer.id -&gt; customer_id</span><br><span class="line">    public <span class="keyword">function</span> <span class="function"><span class="title">getCustomer</span></span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="variable">$this</span>-&gt;hasOne(Customer::className(), [<span class="string">'id'</span> =&gt; <span class="string">'customer_id'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>   ps：在设计数据库时，一对多和多对一的关系不需要数据库新建关联表，而多对多的关系则需要新建管理表。</p>
-<p>   如果存在关联表，则需要下例这样</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Order extends \yii\db\ActiveRecord</span><br><span class="line">&#123;</span><br><span class="line">    public <span class="keyword">function</span> <span class="function"><span class="title">getItems</span></span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="variable">$this</span>-&gt;hasMany(Item::className(), [<span class="string">'id'</span> =&gt; <span class="string">'item_id'</span>])</span><br><span class="line">            -&gt;viaTable(<span class="string">'order_item'</span>, [<span class="string">'order_id'</span> =&gt; <span class="string">'id'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>或者是<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  class Order extends \yii\db\ActiveRecord</span><br><span class="line">&#123;</span><br><span class="line">    public <span class="keyword">function</span> <span class="function"><span class="title">getOrderItems</span></span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="variable">$this</span>-&gt;hasMany(OrderItem::className(), [<span class="string">'order_id'</span> =&gt; <span class="string">'id'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">function</span> <span class="function"><span class="title">getItems</span></span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="variable">$this</span>-&gt;hasMany(Item::className(), [<span class="string">'id'</span> =&gt; <span class="string">'item_id'</span>])</span><br><span class="line">            -&gt;via(<span class="string">'orderItems'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>via() 方法和 viaTable() 类似，不过第一个参数是在当前ActiveRecord类中声明的一个关系（relation）名，而不是中间表的名称</p>
-<p>6.延迟加载和提前加载</p>
-<p>如前所述，当我们实际需要访问关联对象时，ActiveRecord会执行一个数据库查询操作来获取相应的数据并加载到对象中。后续的访问将不再执行数据库查询。我们称之为延迟加载（lazy loading）。比如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// SQL executed: SELECT * FROM customer WHERE id=<span class="number">1</span></span><br><span class="line"><span class="variable">$customer</span> = Customer::findOne(<span class="number">1</span>);</span><br><span class="line">// SQL executed: SELECT * FROM order WHERE customer_id=<span class="number">1</span></span><br><span class="line"><span class="variable">$orders</span> = <span class="variable">$customer</span>-&gt;orders;</span><br><span class="line">// no SQL executed</span><br><span class="line"><span class="variable">$orders2</span> = <span class="variable">$customer</span>-&gt;orders;</span><br></pre></td></tr></table></figure></p>
-<p>延迟加载使用很方便，可以节约内存和提高执行效率，不过在某些情况下，也会遭遇糟糕的性能问题：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// SQL executed: SELECT * FROM customer LIMIT <span class="number">100</span></span><br><span class="line"><span class="variable">$customers</span> = Customer::find()-&gt;<span class="built_in">limit</span>(<span class="number">100</span>)-&gt;all();</span><br><span class="line"></span><br><span class="line">foreach (<span class="variable">$customers</span> as <span class="variable">$customer</span>) &#123;</span><br><span class="line">    // SQL executed: SELECT * FROM order WHERE customer_id=...</span><br><span class="line">    <span class="variable">$orders</span> = <span class="variable">$customer</span>-&gt;orders;</span><br><span class="line">    // ...handle <span class="variable">$orders</span>...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如上代码，假设有超过100个客户，那么将执行101次SQL查询! 第一个查询返回100个客户，然后对于获取每个客户的订单都需要执行一次查询。</p>
-<p>为了解决上述性能问题，我们可以使用所谓的提前加载（eager loading）方法，即调用 yii\db\ActiveQuery::with()：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// SQL executed: SELECT * FROM customer LIMIT <span class="number">100</span>;</span><br><span class="line">//               SELECT * FROM orders WHERE customer_id IN (<span class="number">1</span>,<span class="number">2</span>,...)</span><br><span class="line"><span class="variable">$customers</span> = Customer::find()-&gt;<span class="built_in">limit</span>(<span class="number">100</span>)</span><br><span class="line">    -&gt;with(<span class="string">'orders'</span>)-&gt;all();</span><br><span class="line"></span><br><span class="line">foreach (<span class="variable">$customers</span> as <span class="variable">$customer</span>) &#123;</span><br><span class="line">    // no SQL executed</span><br><span class="line">    <span class="variable">$orders</span> = <span class="variable">$customer</span>-&gt;orders;</span><br><span class="line">    // ...handle <span class="variable">$orders</span>...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样，只需要执行两条SQL查询语句就完成同样的任务!</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1253,7 +1253,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
