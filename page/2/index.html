@@ -202,6 +202,101 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/21/xjx-6/" itemprop="url">
+                  PHP实现单例模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-21T17:06:57+08:00" content="2016-03-21">
+              2016-03-21
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>今天用php实现了单例模式</p>
+<h1 id="为什么要使用单例模式">为什么要使用单例模式</h1><p>这个设计模式主要目的是想在整个系统中只能出现一个类的实例。这样做当然是有必然的，比如你的软件的全局配置信息，或者是一个Factory，或是一个主控类，等等。你希望这个类在整个系统中只能出现一个实例。</p>
+<p>对于系统中的某些类来说，只有一个实例很重要，例如，一个系统中可以存在多个打印任务，但是只能有一个正在工作的任务；一个系统只能有一个窗口管理器或文件系统；一个系统只能有一个计时工具或ID(序号)生成器。如在Windows中就只能打开一个任务管理器。如果不使用机制对窗口对象进行唯一化，将弹出多个窗口，如果这些窗口显示的内容完全一致，则是重复对象，浪费内存资源；如果这些窗口显示的内容不一致，则意味着在某一瞬间系统有多个状态，与实际不符，也会给用户带来误解，不知道哪一个才是真实的状态。因此有时确保系统中某个对象的唯一性即一个类只能有一个实例非常重要</p>
+<p>使用单例模式，可以减少在一次web请求中多次连接数据库或者解析配置文件等操作对系统资源的消耗，也可以避免大量的new操作。</p>
+<h1 id="使用php实现单例模式">使用php实现单例模式</h1><h2 id="注意点">注意点</h2><p>在php中实现单例模式需要注意：<br>需要一个静态变量保存实例<br>需要提供一个公共的静态方法，用于返回需要获取的实例<br>需要防止外部程序通过new和clone等操作产生相关实例，从而失去单例模式的意义</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class singleton</span><br><span class="line">&#123;	</span><br><span class="line"></span><br><span class="line">	private <span class="variable">$_handle</span> = null;</span><br><span class="line"></span><br><span class="line">	private static <span class="variable">$_instance</span> = array();</span><br><span class="line"></span><br><span class="line">	private <span class="keyword">function</span> <span class="function"><span class="title">_construct</span></span>()&#123;</span><br><span class="line">		<span class="variable">$this</span>-&gt;_handle = new stdclass();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public <span class="keyword">function</span> <span class="function"><span class="title">_clone</span></span>()&#123;</span><br><span class="line">		trigger_error(<span class="string">"clone method is not allowed"</span>,E_USER_ERROR);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static <span class="keyword">function</span> <span class="function"><span class="title">getInstance</span></span>()&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(!isset(self::<span class="variable">$_instance</span>))&#123;</span><br><span class="line">			self::<span class="variable">$_instance</span>= new self();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="built_in">return</span> self::<span class="variable">$_instance</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	public <span class="keyword">function</span> <span class="function"><span class="title">getobj</span></span>()&#123;</span><br><span class="line">		<span class="built_in">return</span> <span class="variable">$this</span>-&gt;_handle;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要点1：关键字，   _construct()是private的，重载_clone()以避免通过外部程序获取相关实例。</p>
+<p>要点2：stdclass()</p>
+<p>牛逼之处在于，这个类虽然是类，但是他的属性是可以添加的，即他本身并没有属性。</p>
+<p>要点3：getInstance使用static</p>
+<p>声明类属性或方法为静态，就可以不实例化类而直接访问。静态属性不能通过一个类已实例化的对象来访问（但静态方法可以）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class programSheet extends singleton&#123;</span><br><span class="line">	</span><br><span class="line">       public static <span class="keyword">function</span> <span class="function"><span class="title">getprogramSheet</span></span>()&#123;</span><br><span class="line">           </span><br><span class="line">             </span><br><span class="line"></span><br><span class="line">            <span class="variable">$programSheet</span> = self::getInstance()-&gt;getobj();</span><br><span class="line">            </span><br><span class="line">            <span class="variable">$programSheet</span>-&gt;id = <span class="number">1</span>;</span><br><span class="line">            </span><br><span class="line">            var_dump(<span class="variable">$programSheet</span>);</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p>见证奇迹的时刻：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">object(stdClass)<span class="comment">#2 (1) &#123;</span></span><br><span class="line">  [<span class="string">"id"</span>]=&gt;</span><br><span class="line">  int(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/19/xjx-5/" itemprop="url">
                   关于二分查找
                 </a>
@@ -821,7 +916,7 @@ req.body.xxxxx 获取从<span class="built_in">post</span>中的变量
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -835,7 +930,7 @@ req.body.xxxxx 获取从<span class="built_in">post</span>中的变量
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

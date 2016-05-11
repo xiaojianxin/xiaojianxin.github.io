@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="php," />
+  <meta name="keywords" content="linux," />
 
 
 
@@ -53,28 +53,25 @@
 
 
 
-<meta name="description" content="php修改http请求头部 在用Yii2.0写restful接口的过程中有这样的一个疑问：
- restful接口既然是完全按照http的规范来定义的，那么restful接口的状态到底应该写在哪一部分？
- 是body里面的数据，还是直接标明请求的状态？
- 对于这个问题大家各执一词，不过现在的问题是，如果我要修改http请求的header该如何做呢？
-header()详解12void header (">
+<meta name="description" content="今天第一天去百度实习，从svn上下来工程，有一个安装脚本，tar -xvf /nuwa.tar.gz .. .. ..
+下面是对tar进行一次总结
+tar参数
+-c ：建立一个压缩文件的参数指令(create 的意思)；-x ：解开一个压缩文件的参数指令！-t ：查看 tarfile 里面的文件！特别注意，在参数的下达中， c/x/t 仅能存在一个！不可同时存在！因为不可能同时压缩与解压缩。-z">
 <meta property="og:type" content="article">
-<meta property="og:title" content="php header函数 修改头部">
-<meta property="og:url" content="http://yoursite.com/2016/01/08/xjx-3/index.html">
+<meta property="og:title" content="tar命令总结">
+<meta property="og:url" content="http://yoursite.com/2016/05/11/linuxtar/index.html">
 <meta property="og:site_name" content="tmac-xjx的博客">
-<meta property="og:description" content="php修改http请求头部 在用Yii2.0写restful接口的过程中有这样的一个疑问：
- restful接口既然是完全按照http的规范来定义的，那么restful接口的状态到底应该写在哪一部分？
- 是body里面的数据，还是直接标明请求的状态？
- 对于这个问题大家各执一词，不过现在的问题是，如果我要修改http请求的header该如何做呢？
-header()详解12void header (">
-<meta property="og:updated_time" content="2016-01-08T09:45:09.000Z">
+<meta property="og:description" content="今天第一天去百度实习，从svn上下来工程，有一个安装脚本，tar -xvf /nuwa.tar.gz .. .. ..
+下面是对tar进行一次总结
+tar参数
+-c ：建立一个压缩文件的参数指令(create 的意思)；-x ：解开一个压缩文件的参数指令！-t ：查看 tarfile 里面的文件！特别注意，在参数的下达中， c/x/t 仅能存在一个！不可同时存在！因为不可能同时压缩与解压缩。-z">
+<meta property="og:updated_time" content="2016-05-11T13:20:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="php header函数 修改头部">
-<meta name="twitter:description" content="php修改http请求头部 在用Yii2.0写restful接口的过程中有这样的一个疑问：
- restful接口既然是完全按照http的规范来定义的，那么restful接口的状态到底应该写在哪一部分？
- 是body里面的数据，还是直接标明请求的状态？
- 对于这个问题大家各执一词，不过现在的问题是，如果我要修改http请求的header该如何做呢？
-header()详解12void header (">
+<meta name="twitter:title" content="tar命令总结">
+<meta name="twitter:description" content="今天第一天去百度实习，从svn上下来工程，有一个安装脚本，tar -xvf /nuwa.tar.gz .. .. ..
+下面是对tar进行一次总结
+tar参数
+-c ：建立一个压缩文件的参数指令(create 的意思)；-x ：解开一个压缩文件的参数指令！-t ：查看 tarfile 里面的文件！特别注意，在参数的下达中， c/x/t 仅能存在一个！不可同时存在！因为不可能同时压缩与解压缩。-z">
 
 
 
@@ -86,7 +83,7 @@ header()详解12void header (">
   };
 </script>
 
-  <title> php header函数 修改头部 | tmac-xjx的博客 </title>
+  <title> tar命令总结 | tmac-xjx的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -206,7 +203,7 @@ header()详解12void header (">
             
             
               
-                php header函数 修改头部
+                tar命令总结
               
             
           </h1>
@@ -215,8 +212,8 @@ header()详解12void header (">
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-08T17:24:02+08:00" content="2016-01-08">
-              2016-01-08
+            <time itemprop="dateCreated" datetime="2016-05-11T21:01:24+08:00" content="2016-05-11">
+              2016-05-11
             </time>
           </span>
 
@@ -239,20 +236,44 @@ header()详解12void header (">
       
 
       
-        <span itemprop="articleBody"><h3 id="php修改http请求头部">php修改http请求头部</h3><p> 在用Yii2.0写restful接口的过程中有这样的一个疑问：</p>
-<p> restful接口既然是完全按照http的规范来定义的，那么restful接口的状态到底应该写在哪一部分？</p>
-<p> 是body里面的数据，还是直接标明请求的状态？</p>
-<p> 对于这个问题大家各执一词，不过现在的问题是，如果我要修改http请求的header该如何做呢？</p>
-<h2 id="header()详解">header()详解</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">void header ( string <span class="variable">$string</span> [, bool <span class="variable">$replace</span> = <span class="literal">true</span> [, int <span class="variable">$http_response_code</span> ]] )</span><br></pre></td></tr></table></figure>
-<p> 1.重定向</p>
-<p> header(“Location: <a href="http://www.baidu.com" target="_blank" rel="external">http://www.baidu.com</a>“);</p>
-<p> exit();//在每个重定向之后都必须加上“exit”,避免发生错误后，继续执行。</p>
-<p> 它不仅把报文发送给浏览器，而且还将返回给浏览器一个 REDIRECT（302）的状态码，除非状态码已经事先被设置为了201或者3xx。</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php </span><br><span class="line">/** </span><br><span class="line">@title:PHP定时跳转 </span><br><span class="line">@功能:等待指定的时间，然后再跳转到指定页面（代替html meta方式） </span><br><span class="line">*/ </span><br><span class="line">header(<span class="string">"refresh:3;url=http://www.baidu.com"</span>); </span><br><span class="line"><span class="built_in">print</span>(<span class="string">'正在加载，请稍等...&lt;br&gt;三秒后自动跳转~~~'</span>); </span><br><span class="line">/* </span><br><span class="line">补充说明： </span><br><span class="line">若等待时间为<span class="number">0</span>，则与header(<span class="string">"location:"</span>)等效。 </span><br><span class="line">*/ </span><br><span class="line">header重定向 就等价于替用户在地址栏输入url</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p> 2.修改请求状态码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(<span class="string">"HTTP/1.0 404 Not Found"</span>);</span><br><span class="line"><span class="built_in">exit</span>();//php手册当中没有写，实测得加上</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>以上是两种特殊的string</p>
-<p>其他具体功能可以具体google  or  baidu</p>
+        <span itemprop="articleBody"><p>今天第一天去百度实习，从svn上下来工程，有一个安装脚本，tar -xvf /nuwa.tar.gz .. .. ..</p>
+<p>下面是对tar进行一次总结</p>
+<h2 id="tar参数">tar参数</h2><blockquote>
+<p>-c ：建立一个压缩文件的参数指令(create 的意思)；<br>-x ：解开一个压缩文件的参数指令！<br>-t ：查看 tarfile 里面的文件！<br>特别注意，在参数的下达中， c/x/t 仅能存在一个！不可同时存在！<br>因为不可能同时压缩与解压缩。<br>-z ：是否同时具有 gzip 的属性？亦即是否需要用 gzip 压缩？<br>-j ：是否同时具有 bzip2 的属性？亦即是否需要用 bzip2 压缩？<br>-v ：压缩的过程中显示文件！这个常用，但不建议用在背景执行过程！<br>-f ：使用档名，请留意，在 f 之后要立即接档名喔！不要再加参数！<br>　　　例如使用『 tar -zcvfP tfile sfile』就是错误的写法，要写成<br>　　　『 tar -zcvPf tfile sfile』才对喔！<br>-p ：使用原文件的原来属性（属性不会依据使用者而变）<br>-P ：可以使用绝对路径来压缩！<br>-N ：比后面接的日期(yyyy/mm/dd)还要新的才会被打包进新建的文件中！<br>–exclude FILE：在压缩的过程中，不要将 FILE 打包！</p>
+</blockquote>
+<h2 id="tar_使用实例">tar 使用实例</h2><p>1.将整个 /etc 目录下的文件全部打包成为 /tmp/etc.tar</p>
+<blockquote>
+<p>tar -cvf /tmp/etc.tar /etc</p>
+<p>如果加 z 参数，则以 .tar.gz 或 .tgz 来代表 gzip 压缩过的 tar file ～</p>
+</blockquote>
+<p>2.查阅上述 /tmp/etc.tar.gz 文件内有哪些文件？</p>
+<blockquote>
+<p>tar -ztvf /tmp/etc.tar.gz</p>
+</blockquote>
+<p>3.将 /tmp/etc.tar.gz 文件解压缩在 /usr/local/src 底下?</p>
+<blockquote>
+<p>cd /usr/local/src</p>
+<p>tar -zxvf /tmp/etc.tar.gz</p>
+</blockquote>
+<p>4.在 /tmp 底下，我只想要将 /tmp/etc.tar.gz 内的 etc/passwd 解开而已</p>
+<blockquote>
+<p>tar -zxvf /tmp/etc.tar.gz etc/passwd</p>
+</blockquote>
+<p>5.将 /etc/ 内的所有文件备份下来，并且保存其权限！</p>
+<blockquote>
+<p>tar -zxvpf /tmp/etc.tar.gz /etc</p>
+</blockquote>
+<p>6./home 当中，比 2005/06/01 新的文件才备份</p>
+<blockquote>
+<p>tar -N “2005/06/01” -zxvf home.tar.gz /home</p>
+</blockquote>
+<p>7.我要备份 /home, /etc ，但不要 /home/dmtsai</p>
+<blockquote>
+<p>tar –exclude /home/dmtsai -zcvf myfile.tar.gz /home/* /etc</p>
+</blockquote>
+<p>8.将 /etc/ 打包后直接解开在 /tmp 底下，而不产生文件！</p>
+<p>cd /etc</p>
+<p>tar -cvf /etc |tar -xvf -</p>
 </span>
       
     </div>
@@ -261,7 +282,7 @@ header()详解12void header (">
       
         <div class="post-tags">
           
-            <a href="/tags/php/" rel="tag">#php</a>
+            <a href="/tags/linux/" rel="tag">#linux</a>
           
         </div>
       
@@ -270,17 +291,13 @@ header()详解12void header (">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/14/xjx-2/" rel="next" title="mysql心得(一)">
-                <i class="fa fa-chevron-left"></i> mysql心得(一)
+              <a href="/2016/05/11/httpheader/" rel="next" title="http首部">
+                <i class="fa fa-chevron-left"></i> http首部
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/16/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -394,7 +411,7 @@ header()详解12void header (">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#php修改http请求头部"><span class="nav-number">1.</span> <span class="nav-text">php修改http请求头部</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#header()详解"><span class="nav-number"></span> <span class="nav-text">header()详解</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tar参数"><span class="nav-number">1.</span> <span class="nav-text">tar参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tar_使用实例"><span class="nav-number">2.</span> <span class="nav-text">tar 使用实例</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
