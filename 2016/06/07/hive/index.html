@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="mysql," />
+  <meta name="keywords" content="hive," />
 
 
 
@@ -53,34 +53,22 @@
 
 
 
-<meta name="description" content="引言上周去滴滴打车面试，遇到这么一个问题：
-假设数据表的字段是 时间，用户，评分。评分大于等于9的是支持，给定一个日期，算出截止到这个日期的这个月的支持人数。
-其中时间是用date来存储的。
-date类型探究之前所有的项目遇到日期，都是存的时间戳，虽然计算方便，但是对于用户并不是十分友好。
-MySQL 使用下列数据类型在数据库中存储日期或日期/时间值：
-
-DATE - 格式 YYYY-MM-DDD">
+<meta name="description" content="2016年5月11号来到百度糯米财富团队实习，第一个项目叫做女娲平台，主要功能是用户画像刻画，负责两个接口。
+其中这两个接口的数据来源是，通过hiveql语句从hadoop平台跑出来的，下面做下关于使用到的hiveql语句的总结
+分区hive 在建表的时候会使用到 partitioned by 语句将表分区，因为数据量都是千万上亿级的，所以分区是很有必要的，一般来说分区都是按天分区，这样每次查询的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql的数据类型之date">
-<meta property="og:url" content="http://yoursite.com/2016/05/04/mysql-date/index.html">
+<meta property="og:title" content="hive使用总结会">
+<meta property="og:url" content="http://yoursite.com/2016/06/07/hive/index.html">
 <meta property="og:site_name" content="tmac-xjx的博客">
-<meta property="og:description" content="引言上周去滴滴打车面试，遇到这么一个问题：
-假设数据表的字段是 时间，用户，评分。评分大于等于9的是支持，给定一个日期，算出截止到这个日期的这个月的支持人数。
-其中时间是用date来存储的。
-date类型探究之前所有的项目遇到日期，都是存的时间戳，虽然计算方便，但是对于用户并不是十分友好。
-MySQL 使用下列数据类型在数据库中存储日期或日期/时间值：
-
-DATE - 格式 YYYY-MM-DDD">
-<meta property="og:updated_time" content="2016-05-04T13:56:44.000Z">
+<meta property="og:description" content="2016年5月11号来到百度糯米财富团队实习，第一个项目叫做女娲平台，主要功能是用户画像刻画，负责两个接口。
+其中这两个接口的数据来源是，通过hiveql语句从hadoop平台跑出来的，下面做下关于使用到的hiveql语句的总结
+分区hive 在建表的时候会使用到 partitioned by 语句将表分区，因为数据量都是千万上亿级的，所以分区是很有必要的，一般来说分区都是按天分区，这样每次查询的">
+<meta property="og:updated_time" content="2016-06-07T07:08:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql的数据类型之date">
-<meta name="twitter:description" content="引言上周去滴滴打车面试，遇到这么一个问题：
-假设数据表的字段是 时间，用户，评分。评分大于等于9的是支持，给定一个日期，算出截止到这个日期的这个月的支持人数。
-其中时间是用date来存储的。
-date类型探究之前所有的项目遇到日期，都是存的时间戳，虽然计算方便，但是对于用户并不是十分友好。
-MySQL 使用下列数据类型在数据库中存储日期或日期/时间值：
-
-DATE - 格式 YYYY-MM-DDD">
+<meta name="twitter:title" content="hive使用总结会">
+<meta name="twitter:description" content="2016年5月11号来到百度糯米财富团队实习，第一个项目叫做女娲平台，主要功能是用户画像刻画，负责两个接口。
+其中这两个接口的数据来源是，通过hiveql语句从hadoop平台跑出来的，下面做下关于使用到的hiveql语句的总结
+分区hive 在建表的时候会使用到 partitioned by 语句将表分区，因为数据量都是千万上亿级的，所以分区是很有必要的，一般来说分区都是按天分区，这样每次查询的">
 
 
 
@@ -92,7 +80,7 @@ DATE - 格式 YYYY-MM-DDD">
   };
 </script>
 
-  <title> mysql的数据类型之date | tmac-xjx的博客 </title>
+  <title> hive使用总结会 | tmac-xjx的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -212,7 +200,7 @@ DATE - 格式 YYYY-MM-DDD">
             
             
               
-                mysql的数据类型之date
+                hive使用总结会
               
             
           </h1>
@@ -221,8 +209,8 @@ DATE - 格式 YYYY-MM-DDD">
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-05-04T21:34:07+08:00" content="2016-05-04">
-              2016-05-04
+            <time itemprop="dateCreated" datetime="2016-06-07T14:37:43+08:00" content="2016-06-07">
+              2016-06-07
             </time>
           </span>
 
@@ -245,32 +233,26 @@ DATE - 格式 YYYY-MM-DDD">
       
 
       
-        <span itemprop="articleBody"><h2 id="引言">引言</h2><p>上周去滴滴打车面试，遇到这么一个问题：</p>
-<p>假设数据表的字段是 时间，用户，评分。评分大于等于9的是支持，给定一个日期，算出截止到这个日期的这个月的支持人数。</p>
-<p>其中时间是用date来存储的。</p>
-<h2 id="date类型探究">date类型探究</h2><p>之前所有的项目遇到日期，都是存的时间戳，虽然计算方便，但是对于用户并不是十分友好。</p>
-<p>MySQL 使用下列数据类型在数据库中存储日期或日期/时间值：</p>
-<blockquote>
-<p>DATE - 格式 YYYY-MM-DD<br>DATETIME - 格式: YYYY-MM-DD HH:MM:SS<br>TIMESTAMP - 格式: YYYY-MM-DD HH:MM:SS<br>YEAR - 格式 YYYY 或 YY</p>
-</blockquote>
-<p>以下是mysql 中最重要的内建日期函数：</p>
-<blockquote>
-<p>NOW()    返回当前的日期和时间<br>CURDATE()    返回当前的日期<br>CURTIME()    返回当前的时间<br>DATE()    提取日期或日期/时间表达式的日期部分<br>EXTRACT()    返回日期/时间按的单独部分<br>DATE_ADD()    给日期添加指定的时间间隔<br>DATE_SUB()    从日期减去指定的时间间隔<br>DATEDIFF()    返回两个日期之间的天数<br>DATE_FORMAT()    用不同的格式显示日期/时间</p>
-</blockquote>
-<p>mysql date 选取函数</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> @dt = <span class="string">'2008-09-10 07:15:30.123456'</span>;</span><br><span class="line"></span><br><span class="line">select date(@dt); -- <span class="number">2008</span>-<span class="number">09</span>-<span class="number">10</span></span><br><span class="line">select time(@dt); -- <span class="number">07</span>:<span class="number">15</span>:<span class="number">30.123456</span></span><br><span class="line">select year(@dt); -- <span class="number">2008</span></span><br><span class="line">select quarter(@dt); -- <span class="number">3</span></span><br><span class="line">select month(@dt); -- <span class="number">9</span></span><br><span class="line">select week(@dt); -- <span class="number">36</span></span><br><span class="line">select day(@dt); -- <span class="number">10</span></span><br><span class="line">select hour(@dt); -- <span class="number">7</span></span><br><span class="line">select minute(@dt); -- <span class="number">15</span></span><br><span class="line">select second(@dt); -- <span class="number">30</span></span><br><span class="line">select microsecond(@dt); -- <span class="number">123456</span></span><br></pre></td></tr></table></figure>
-<p>MySQL Extract() 函数，可以上面实现类似的功能：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> @dt = <span class="string">'2008-09-10 07:15:30.123456'</span>;</span><br><span class="line"></span><br><span class="line">select extract(year from @dt); -- <span class="number">2008</span></span><br><span class="line">select extract(quarter from @dt); -- <span class="number">3</span></span><br><span class="line">select extract(month from @dt); -- <span class="number">9</span></span><br><span class="line">select extract(week from @dt); -- <span class="number">36</span></span><br><span class="line">select extract(day from @dt); -- <span class="number">10</span></span><br><span class="line">select extract(hour from @dt); -- <span class="number">7</span></span><br><span class="line">select extract(minute from @dt); -- <span class="number">15</span></span><br><span class="line">select extract(second from @dt); -- <span class="number">30</span></span><br><span class="line">select extract(microsecond from @dt); -- <span class="number">123456</span></span><br><span class="line"></span><br><span class="line">select extract(year_month from @dt); -- <span class="number">200809</span></span><br><span class="line">select extract(day_hour from @dt); -- <span class="number">1007</span></span><br><span class="line">select extract(day_minute from @dt); -- <span class="number">100715</span></span><br><span class="line">select extract(day_second from @dt); -- <span class="number">10071530</span></span><br><span class="line">select extract(day_microsecond from @dt); -- <span class="number">10071530123456</span></span><br><span class="line">select extract(hour_minute from @dt); -- <span class="number">715</span></span><br><span class="line">select extract(hour_second from @dt); -- <span class="number">71530</span></span><br><span class="line">select extract(hour_microsecond from @dt); -- <span class="number">71530123456</span></span><br><span class="line">select extract(minute_second from @dt); -- <span class="number">1530</span></span><br><span class="line">select extract(minute_microsecond from @dt); -- <span class="number">1530123456</span></span><br><span class="line">select extract(second_microsecond from @dt); -- <span class="number">30123456</span></span><br></pre></td></tr></table></figure>
-<p>MySQL dayof… 函数：dayofweek(), dayofmonth(), dayofyear()<br>分别返回日期参数，在一周、一月、一年中的位置。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> @dt = <span class="string">'2008-08-08'</span>;</span><br><span class="line"></span><br><span class="line">select dayofweek(@dt); -- <span class="number">6</span></span><br><span class="line">select dayofmonth(@dt); -- <span class="number">8</span></span><br><span class="line">select dayofyear(@dt); -- <span class="number">221</span></span><br></pre></td></tr></table></figure>
-<p>MySQL week… 函数：week(), weekofyear(), dayofweek(), weekday(), yearweek()</p>
-<p>WEEK(date,first)返回date是一年的第几周(first默认值0,first取值1表示周一是周的开始,0从周日开始)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> @dt = <span class="string">'2008-08-08'</span>;</span><br><span class="line"></span><br><span class="line">select week(@dt); -- <span class="number">31</span></span><br><span class="line">select week(@dt,<span class="number">3</span>); -- <span class="number">32</span></span><br><span class="line">select weekofyear(@dt); -- <span class="number">32</span></span><br><span class="line"></span><br><span class="line">select dayofweek(@dt); -- <span class="number">6</span></span><br><span class="line">select weekday(@dt); -- <span class="number">4</span></span><br><span class="line"></span><br><span class="line">select yearweek(@dt); -- <span class="number">200831</span></span><br></pre></td></tr></table></figure>
-<p>MySQL 返回星期和月份名称函数：dayname(), monthname()<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> @dt = <span class="string">'2008-08-08'</span>;</span><br><span class="line"></span><br><span class="line">select dayname(@dt); -- Friday</span><br><span class="line">select monthname(@dt); -- August</span><br></pre></td></tr></table></figure></p>
-<p>MySQL last_day() 函数：返回月份中的最后一天。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_day(<span class="string">'2008-02-01'</span>); -- <span class="number">2008</span>-<span class="number">02</span>-<span class="number">29</span></span><br><span class="line">select last_day(<span class="string">'2008-08-08'</span>); -- <span class="number">2008</span>-<span class="number">08</span>-<span class="number">31</span></span><br></pre></td></tr></table></figure>
-<p>MySQL last_day() 函数非常有用，比如我想得到当前月份中有多少天，可以这样来计算：<br>mysql&gt; select now(), day(last_day(now())) as days;</p>
-<p>+———————+——+<br>| now() | days |<br>+———————+——+<br>| 2008-08-09 11:45:45 | 31 |<br>+———————+——+</p>
+        <span itemprop="articleBody"><p>2016年5月11号来到百度糯米财富团队实习，第一个项目叫做女娲平台，主要功能是用户画像刻画，负责两个接口。</p>
+<p>其中这两个接口的数据来源是，通过hiveql语句从hadoop平台跑出来的，下面做下关于使用到的hiveql语句的总结</p>
+<h2 id="分区">分区</h2><p>hive 在建表的时候会使用到 partitioned by 语句将表分区，因为数据量都是千万上亿级的，所以分区是很有必要的，一般来说分区都是按天分区，这样每次查询的语句都需要加上分区字段，比如select <em> from **</em> where day = 20160607，</p>
+<h2 id="连表操作">连表操作</h2><p>1.hql语句不支持不等值连接，所以连接条件必须是等值的。</p>
+<p>2.left outer join</p>
+<p>在这记录种join连接操作中，join操作符左边表中符合where子句的所有记录都将被返回，join操作符右边表中如果没有符合on后面连接条件的记录时，那么从右边表指定选择的列的值将会是NULL</p>
+<p>3.case…when..then句式</p>
+<p>该语句和if语句类似，用于处理单个列的查询结果</p>
+<p>例：</p>
+<p>···bash</p>
+<p>select name，salary， case when salary &lt; 50000.0 then ‘low’ when salary &gt;= 50000.0 and salary &lt; 70000.0 then ‘middle’ when salary &gt;= 70000.0 and salary &lt; 1000100.0 then ‘high’ else ‘very high’</p>
+<p>end as bracket from employees;</p>
+<p>···</p>
+<h2 id="hive命令">hive命令</h2><p>1.直接执行hiveql</p>
+<p>hive -e “<strong><em>此处执行hql语句</em></strong>”</p>
+<p>2.文件执行hiveql</p>
+<p>hive -f 文件名</p>
+<p>3.结果导入到文件</p>
+<p>hive -f 文件1 &gt;&gt; 文件2</p>
+<p>这样文件1的脚本执行完毕之后结果就会导入文件2当中</p>
 </span>
       
     </div>
@@ -279,7 +261,7 @@ DATE - 格式 YYYY-MM-DDD">
       
         <div class="post-tags">
           
-            <a href="/tags/mysql/" rel="tag">#mysql</a>
+            <a href="/tags/hive/" rel="tag">#hive</a>
           
         </div>
       
@@ -288,17 +270,13 @@ DATE - 格式 YYYY-MM-DDD">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/03/phpAutoload/" rel="next" title="php类的自动加载">
-                <i class="fa fa-chevron-left"></i> php类的自动加载
+              <a href="/2016/05/11/linuxtar/" rel="next" title="tar命令总结">
+                <i class="fa fa-chevron-left"></i> tar命令总结
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/11/httpheader/" rel="prev" title="http首部">
-                http首部 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -412,7 +390,7 @@ DATE - 格式 YYYY-MM-DDD">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#date类型探究"><span class="nav-number">2.</span> <span class="nav-text">date类型探究</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分区"><span class="nav-number">1.</span> <span class="nav-text">分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连表操作"><span class="nav-number">2.</span> <span class="nav-text">连表操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hive命令"><span class="nav-number">3.</span> <span class="nav-text">hive命令</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

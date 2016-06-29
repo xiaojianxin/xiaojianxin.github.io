@@ -202,6 +202,106 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/07/hive/" itemprop="url">
+                  hive使用总结会
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-06-07T14:37:43+08:00" content="2016-06-07">
+              2016-06-07
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>2016年5月11号来到百度糯米财富团队实习，第一个项目叫做女娲平台，主要功能是用户画像刻画，负责两个接口。</p>
+<p>其中这两个接口的数据来源是，通过hiveql语句从hadoop平台跑出来的，下面做下关于使用到的hiveql语句的总结</p>
+<h2 id="分区">分区</h2><p>hive 在建表的时候会使用到 partitioned by 语句将表分区，因为数据量都是千万上亿级的，所以分区是很有必要的，一般来说分区都是按天分区，这样每次查询的语句都需要加上分区字段，比如select <em> from **</em> where day = 20160607，</p>
+<h2 id="连表操作">连表操作</h2><p>1.hql语句不支持不等值连接，所以连接条件必须是等值的。</p>
+<p>2.left outer join</p>
+<p>在这记录种join连接操作中，join操作符左边表中符合where子句的所有记录都将被返回，join操作符右边表中如果没有符合on后面连接条件的记录时，那么从右边表指定选择的列的值将会是NULL</p>
+<p>3.case…when..then句式</p>
+<p>该语句和if语句类似，用于处理单个列的查询结果</p>
+<p>例：</p>
+<p>···bash</p>
+<p>select name，salary， case when salary &lt; 50000.0 then ‘low’ when salary &gt;= 50000.0 and salary &lt; 70000.0 then ‘middle’ when salary &gt;= 70000.0 and salary &lt; 1000100.0 then ‘high’ else ‘very high’</p>
+<p>end as bracket from employees;</p>
+<p>···</p>
+<h2 id="hive命令">hive命令</h2><p>1.直接执行hiveql</p>
+<p>hive -e “<strong><em>此处执行hql语句</em></strong>”</p>
+<p>2.文件执行hiveql</p>
+<p>hive -f 文件名</p>
+<p>3.结果导入到文件</p>
+<p>hive -f 文件1 &gt;&gt; 文件2</p>
+<p>这样文件1的脚本执行完毕之后结果就会导入文件2当中</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/11/linuxtar/" itemprop="url">
                   tar命令总结
                 </a>
@@ -1159,95 +1259,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/23/xjx-7/" itemprop="url">
-                  2016-03-22 网易笔试总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-23T10:30:51+08:00" content="2016-03-23">
-              2016-03-23
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>昨晚上做了网易在线笔试，选择题记不住了，现总结两道算法题，很简单，但是要在规定时间完完全全写对，也是不容易。</p>
-<h1 id="问题一">问题一</h1><p>题目描述：输入一组数，以0结束，求这组能拼成的最大数</p>
-<p>样例输入：20 15 25 0</p>
-<p>样例输出：252015</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#include&lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include&lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include&lt;string&gt;</span></span><br><span class="line"><span class="comment">#include&lt;algorithm&gt;</span></span><br><span class="line"><span class="comment">#include&lt;sstream&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">bool cmp(int a,int b)</span><br><span class="line">int <span class="function"><span class="title">main</span></span>()&#123;</span><br><span class="line">	</span><br><span class="line">	vector&lt;int&gt; nums;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		int n;</span><br><span class="line">		cin&gt;&gt;n;</span><br><span class="line">		<span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">			<span class="built_in">break</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			nums.push_back(n);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	sort(nums.begin(),nums.end(),cmp);</span><br><span class="line">	string result;</span><br><span class="line">	<span class="keyword">for</span>(int i = <span class="number">0</span>;i&lt;nums.size();i++)&#123;</span><br><span class="line">		int temp = nums[i];</span><br><span class="line">		stringstream ss;//c++中int转字符串的方法；</span><br><span class="line">		string str;</span><br><span class="line">		ss&lt;&lt;temp;</span><br><span class="line">		ss&gt;&gt;str;</span><br><span class="line"></span><br><span class="line">		result.append(str);</span><br><span class="line">			</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	cout&lt;&lt;result&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="built_in">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool cmp(int a,int b)&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">return</span> a&gt;b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这道题不难，主要是库的引用和int转换成string的方法</p>
-<h1 id="问题二">问题二</h1><p> 问题描述：求一组数中的第k个最大数<br> 样例：5,4,2,3,1 2<br> 输出： 4</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#include&lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include&lt;vector&gt;</span></span><br><span class="line"><span class="comment">#include&lt;algorithm&gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">   int qsort(vector&lt;int&gt; &amp;nums,int left,int right);</span><br><span class="line">   int kth(vector&lt;int&gt; &amp;nums,int left,int right,int k);</span><br><span class="line">int <span class="function"><span class="title">main</span></span>()&#123;</span><br><span class="line">	</span><br><span class="line">	int n;</span><br><span class="line">	cin&gt;&gt;n;//输入数字个数</span><br><span class="line">	vector&lt;int&gt; nums(n,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(int i = <span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;nums[i];</span><br><span class="line">	&#125;</span><br><span class="line">	int k;</span><br><span class="line">	cin&gt;&gt;k;//输入k</span><br><span class="line"></span><br><span class="line">	<span class="built_in">return</span> kth(nums,<span class="number">0</span>,nums.size()-<span class="number">1</span>,k);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int kth(vector&lt;int&gt; &amp;nums,int left,int right,int k)&#123;</span><br><span class="line"></span><br><span class="line">	int m = qsort(nums,left,right);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(m==k)&#123;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">return</span> m;</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(m&gt;k)&#123;</span><br><span class="line">		qsort(nums,left,m-<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(m&lt;k)&#123;</span><br><span class="line">		qsort(nums,m+<span class="number">1</span>,right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int qsort(vector&lt;int&gt; &amp;nums,int left,int right)&#123;</span><br><span class="line"></span><br><span class="line">	int temp = nums[left];</span><br><span class="line"></span><br><span class="line">	int i = nums[left];</span><br><span class="line">	int j = nums[right];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(i!=j)&#123;</span><br><span class="line">		<span class="keyword">if</span>(nums[j]&gt;=temp&amp;&amp;i&lt;j)&#123;</span><br><span class="line">			j--;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(nums[i]&lt;=temp&amp;&amp;i&lt;j)&#123;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(i&lt;j)&#123;</span><br><span class="line"></span><br><span class="line">			int tmp = nums[i];</span><br><span class="line"></span><br><span class="line">			nums[i] = nums[j];</span><br><span class="line"></span><br><span class="line">			nums[j] = tmp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	nums[left] = nums[i];</span><br><span class="line"></span><br><span class="line">	nums[i] = temp;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 这个题的重点是基于快速排序的快速选择算法。</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1294,7 +1305,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1308,7 +1319,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
