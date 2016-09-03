@@ -202,6 +202,109 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/03/jincheng/" itemprop="url">
+                  百度贴吧面试总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-09-03T17:33:27+08:00" content="2016-09-03">
+              2016-09-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="linux下进程和线程的去边">linux下进程和线程的去边</h1><h2 id="进程和线程的区别">进程和线程的区别</h2><p>这个问题从本科一直被问到现在，我认为从定义上理解更加合适</p>
+<h3 id="定义">定义</h3><p>1:进程：进程是一次程序的执行，更准确的，进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位.<br>2:线程：一个程序的多个执行线路叫做线程，更准确的，线程是一个进程内部的一个控制序列。</p>
+<h3 id="关系">关系</h3><p>1.一个线程可以创建和撤销另一个线程，一个进程中的多个线程可以并发执行。<br>2.所有的进程都至少有一个执行线程。</p>
+<h3 id="区别">区别</h3><p>进程和线程的主要差别在于它们是不同的操作系统资源管理方式</p>
+<p>1.一个进程崩溃后，在保护模式下不会对其它进程产生影响，而线程只是一个进程中的不同执行路径</p>
+<p>2.线程有自己的堆栈和局部变量，但线程之间没有单独的地址空间，一个线程死掉就等于整个进程死掉，所以多进程的程序要比多线程的程序健壮，但在进程切换时，耗费资源较大，效率要差一些</p>
+<p>3.但对于一些要求同时进行并且又要共享某些变量的并发操作，只能用线程，不能用进程。</p>
+<p>4.简而言之,一个程序至少有一个进程,一个进程至少有一个线程.</p>
+<p>5.线程的划分尺度小于进程，使得多线程程序的并发性高。</p>
+<p>6.进程在执行过程中拥有独立的内存单元，而多个线程共享内存，从而极大地提高了程序的运行效率</p>
+<p>7.线程在执行过程中与进程还是有区别的。每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制</p>
+<p>8.从逻辑角度来看，多线程的意义在于一个应用程序中，有多个执行部分可以同时执行。但操作系统并没有将多个线程看做多个独立的应用，来实现进程的调度和管理以及资源分配。这就是进程和线程的重要区别</p>
+<h2 id="linux下进程和线程的区别">linux下进程和线程的区别</h2><p>Linux其实本事没有线程的概念，只是为了迎合开发者的需要而使用了一个所谓轻量级进程（POSIX线程），从这两者区别也可以发现，轻量级进程最大的用途在于可以共享一些资源，如地址空间，打开文件 。所以，事实上Linux实现多线程应用程序的方式就是用轻量级进程来代替线程</p>
+<h1 id="进程间通信方式">进程间通信方式</h1><p>信号，互斥量，管道，套接字，这些都需要实践来检验</p>
+<p>#linux下如何找到一个进程的绝对路径</p>
+<p>通过ps及top命令查看进程信息时，只能查到相对路径，查不到的进程的详细信息，如绝对路径等。这时，我们需要通过以下的方法来查看进程的详细信息：</p>
+<p>Linux在启动一个进程时，系统会在/proc下创建一个以PID命名的文件夹，在该文件夹下会有我们的进程的信息，其中包括一个名为exe的文件即记录了绝对路径，通过ll或ls –l命令即可查看。</p>
+<p>ll /proc/PID</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cwd符号链接的是进程运行目录；</span><br><span class="line"></span><br><span class="line">exe符号连接就是执行程序的绝对路径；</span><br><span class="line"></span><br><span class="line">cmdline就是程序运行时输入的命令行命令；</span><br><span class="line"></span><br><span class="line">environ记录了进程运行时的环境变量；</span><br><span class="line"></span><br><span class="line">fd目录下是进程打开或使用的文件的符号连接。</span><br></pre></td></tr></table></figure>
+<p>#php write on copy</p>
+<p>例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$m1</span> = memory_get_usage();</span><br><span class="line"><span class="variable">$a</span>    =    <span class="number">12</span>;</span><br><span class="line"><span class="variable">$b</span>    =    <span class="variable">$a</span>;</span><br><span class="line"><span class="variable">$b</span>++;</span><br><span class="line"><span class="variable">$m2</span> = memory_get_usage();</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$m2</span>-<span class="variable">$m1</span>;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>将一个变量赋给另一个变量的时候，只会讲一个引用指向该内存区域，但是当要对这个被赋值的变量进行写的时候，会在内存中重新分配一块内存，将那个引用指向这个内存</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/07/hive/" itemprop="url">
                   hive使用总结会
                 </a>
@@ -1168,97 +1271,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/24/xjx-8/" itemprop="url">
-                  关于递归回溯的问题总结（一）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-24T15:16:48+08:00" content="2016-03-24">
-              2016-03-24
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>最近刷leetcode遇到了很多递归回溯的问题，在这里总结下</p>
-<h1 id="问题一:Subsets">问题一:Subsets</h1><p>Given a set of distinct integers nums, return all possible subsets</p>
-<p>数学中的全排列问题，唯一需要注意的是，所有的排列都是非递减的，所以在求全排列之前先排序</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  vector&lt;vector&lt;int&gt;&gt; subsets(vector&lt;int&gt; &amp;nums)&#123;</span><br><span class="line"></span><br><span class="line">  	vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line">  	sort(nums.begin(),nums.end());</span><br><span class="line"></span><br><span class="line">  	vector&lt;int&gt; temp;</span><br><span class="line">result.push_back(temp);//压入一个空集</span><br><span class="line">  	dfs(result,temp,nums,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  	<span class="built_in">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; result,vector&lt;int&gt;&amp; temp,vector&lt;int&gt;&amp; nums,int pos)&#123;</span><br><span class="line"></span><br><span class="line">  	<span class="keyword">if</span>(pos==nums.size())&#123;</span><br><span class="line">  		<span class="built_in">return</span>;</span><br><span class="line">  	&#125;</span><br><span class="line"></span><br><span class="line">  	<span class="keyword">for</span>(int i = pos;i&lt;nums.size();i++)&#123;</span><br><span class="line"></span><br><span class="line">  		temp.push_back(nums[i]);</span><br><span class="line">  		result.push_back(temp);</span><br><span class="line">  		dfs(result,temp,nums,i+<span class="number">1</span>);</span><br><span class="line">  		temp.pop_back();</span><br><span class="line">  	&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<h1 id="问题一的进阶_Subsets_II">问题一的进阶 Subsets II</h1><p>这一次在输入当中会出现重复数字，例如[1,2,2]<br>输出：<br>[<br>  [2],<br>  [1],<br>  [1,2,2],<br>  [2,2],<br>  [1,2],<br>  []<br>]</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">vector&lt;vector&lt;int&gt;&gt; subsetsWithDup(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">    </span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line">    vector&lt;int&gt; temp;</span><br><span class="line">    </span><br><span class="line">    result.push_back(temp);</span><br><span class="line">    sort(nums.begin(),nums.end());</span><br><span class="line">    dfs(result,temp,nums,<span class="number">0</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">return</span> result;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; result,vector&lt;int&gt;&amp; temp,vector&lt;int&gt;&amp; nums,int pos)&#123;</span><br><span class="line">    <span class="keyword">if</span>(pos==nums.size())&#123;</span><br><span class="line">        <span class="built_in">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(int i = pos;i&lt;nums.size();i++)&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(i&amp;&amp;nums[i]==nums[i-<span class="number">1</span>]&amp;&amp;i&gt;pos)&#123;</span><br><span class="line">            <span class="built_in">continue</span>;</span><br><span class="line">        &#125;//去重处理</span><br><span class="line">        </span><br><span class="line">        temp.push_back(nums[i]);</span><br><span class="line">        </span><br><span class="line">        result.push_back(temp);</span><br><span class="line">        </span><br><span class="line">        dfs(result,temp,nums,i+<span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">        temp.pop_back();</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>#问题三 Combinations</p>
-<p>If n = 4 and k = 2, a solution is:</p>
-<p>[<br>  [2,4],<br>  [3,4],<br>  [2,3],<br>  [1,2],<br>  [1,3],<br>  [1,4],<br>]</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">vector&lt;vector&lt;int&gt;&gt; combine(int n, int k) &#123;</span><br><span class="line">    </span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line">    </span><br><span class="line">    vector&lt;int&gt; temp;</span><br><span class="line">    </span><br><span class="line">    dfs(result,temp,<span class="number">0</span>,n,k);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">return</span> result;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; result,vector&lt;int&gt; temp,int pos,int n,int k)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(temp.size()==k)&#123;</span><br><span class="line">        result.push_back(temp);</span><br><span class="line">        <span class="built_in">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(int i = pos;i&lt;n;i++)&#123;</span><br><span class="line">        </span><br><span class="line">        temp.push_back(i+<span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">        dfs(result,temp,i+<span class="number">1</span>,n,k);</span><br><span class="line">        </span><br><span class="line">        temp.pop_back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>现就总结这么多，下一篇继续总结其他的递归回溯问题。</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1305,7 +1317,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1319,7 +1331,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
